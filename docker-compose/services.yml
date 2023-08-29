@@ -1,0 +1,19 @@
+version: '3.7'
+
+services:
+  wikipedia-to-kafka-service:
+    image: ${GROUP_ID}/wikipedia-to-kafka-service:${SERVICE_VERSION:-latest}
+    ports:
+      - "5005:5005"
+    volumes:
+      - "./docker-logs:/workspaces/wikipedia-to-kafka-service/logs"
+    environment:
+      - "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -Xms128m -Xmx1024m"
+      - "LOGGING_LEVEL_COM_MICROSERVICES_DEMO=info"
+      - "LOGGING_LEVEL_ROOT=info"
+      - "KAFKA-CONFIG_TOPIC-NAME=wikipedia.topic"
+      - "KAFKA-CONFIG_BOOTSTRAP-SERVERS=kafka1:19092, kafka2:19093, kafka3:19094"
+      - "KAFKA-CONFIG_SCHEMA-REGISTRY-URL=http://schema-registry:8081"
+      - "TWITTER-TO-KAFKA-SERVICE_ENABLE-MOCK-TWEETS=true"
+    networks:
+      - ${GLOBAL_NETWORK:-services}

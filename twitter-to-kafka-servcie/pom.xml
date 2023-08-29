@@ -1,0 +1,49 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.kaziabid.learn.wams</groupId>
+        <artifactId>web-analytics-microservice</artifactId>
+        <version>0.0.1</version>
+    </parent>
+    <artifactId>twitter-to-kafka-servcie</artifactId>
+    <name>twitter-to-kafka-service</name>
+    <description>The microservce which is responsible for reading the twitter
+        stream and then populate the kafka topic.</description>
+    <packaging>jar</packaging>
+
+    <properties>
+        <twitter4j.version>4.0.7</twitter4j.version>
+        <cxf-version>4.0.2</cxf-version>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.apache.httpcomponents.client5</groupId>
+            <artifactId>httpclient5</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-rs-client</artifactId>
+            <version>${cxf-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-rs-sse</artifactId>
+            <version>${cxf-version}</version>
+        </dependency>
+    </dependencies>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>

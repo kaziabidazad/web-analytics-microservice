@@ -1,0 +1,77 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.kaziabid.learn.wams</groupId>
+        <artifactId>web-analytics-microservice</artifactId>
+        <version>0.0.1</version>
+    </parent>
+    <artifactId>wikipedia-to-kafka-service</artifactId>
+    <name>wikipedia-to-kafka-service</name>
+    <description>A microservice which reads feeds from wikipedia and pushed to
+        kafka topic.</description>
+    <packaging>jar</packaging>
+
+    <properties>
+        <cxf-version>4.0.2</cxf-version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.httpcomponents.client5</groupId>
+            <artifactId>httpclient5</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-rs-client</artifactId>
+            <version>${cxf-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-rs-sse</artifactId>
+            <version>${cxf-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.kaziabid.learn.wams</groupId>
+            <artifactId>kafka-admin</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.kaziabid.learn.wams</groupId>
+            <artifactId>kafka-producer</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <image>
+                        <name>
+                            ${project.groupId}/${project.artifactId}:${project.version}</name>
+                    </image>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>1</id>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>2</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>build-image</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

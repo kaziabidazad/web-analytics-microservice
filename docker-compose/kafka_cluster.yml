@@ -1,0 +1,211 @@
+#version: '3.7'
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    hostname: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_SERVER_ID: 1
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+      ZOOKEEPER_INIT_LIMIT: 5
+      ZOOKEEPER_SYNC_LIMIT: 2
+      ZOOKEEPER_SERVERS: zookeeper:2888:3888
+    networks:
+      - ${GLOBAL_NETWORK:-kafka}
+  schema-registry:
+    image: confluentinc/cp-schema-registry:latest
+    hostname: schema-registry
+    depends_on:
+      - zookeeper
+      - kafka-broker-1
+      - kafka-broker-2
+      - kafka-broker-3
+      - kafka-broker-4
+      - kafka-broker-5
+      - kafka-broker-6
+      - kafka-broker-7
+      - kafka-broker-8
+      - kafka-broker-9
+    ports:
+      - "8081:8081"
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: 'zookeeper:2181'
+#      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'INTERNAL://kafka-broker-1:9092,INTERNAL://kafka-broker-2:9092,INTERNAL://kafka-broker-3:9092, INTERNAL://kafka-broker-4:9092, INTERNAL://kafka-broker-5:9092, INTERNAL://kafka-broker-6:9092,INTERNAL://kafka-broker-7:9092,INTERNAL://kafka-broker-7:9092,INTERNAL://kafka-broker-9:9092'
+      SCHEMA_REGISTRY_LISTENERS: http://schema-registry:8081
+      SCHEMA_REGISTRY_DEBUG: "true"
+    networks:
+      - ${GLOBAL_NETWORK:-kafka}
+  kafka-broker-1:
+    image: confluentinc/cp-kafka:latest
+    hostname: kafka-broker-1
+    ports:
+      - "10001:10001"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: INTERNAL://kafka-broker-1:9092,EXTERNAL://:10001
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-broker-1:9092,EXTERNAL://:10001
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT,DOCKER:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_COMPRESSION_TYPE: producer
+#      KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
+      KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "true"
+    networks:
+      - ${GLOBAL_NETWORK:-kafka}
+  kafka-broker-2:
+    image: confluentinc/cp-kafka:latest
+    hostname: kafka-broker-2
+    ports:
+      - "10002:10002"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 2
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: INTERNAL://kafka-broker-2:9092,EXTERNAL://:10002
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-broker-2:9092,EXTERNAL://:10002
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT,DOCKER:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_COMPRESSION_TYPE: producer
+#      KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
+      KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "true"
+    networks:
+      - ${GLOBAL_NETWORK:-kafka}
+  kafka-broker-3:
+    image: confluentinc/cp-kafka:latest
+    hostname: kafka-broker-3
+    ports:
+      - "10003:10003"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 3
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: INTERNAL://kafka-broker-3:9092,EXTERNAL://:10003
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-broker-3:9092,EXTERNAL://:10003
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT,DOCKER:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_COMPRESSION_TYPE: producer
+#      KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
+      KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "true"
+    networks:
+      - ${GLOBAL_NETWORK:-kafka}
+  kafka-broker-4:
+    image: confluentinc/cp-kafka:latest
+    hostname: kafka-broker-4
+    ports:
+      - "10004:10004"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 4
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: INTERNAL://kafka-broker-4:9092,EXTERNAL://:10004
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-broker-4:9092,EXTERNAL://:10004
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT,DOCKER:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_COMPRESSION_TYPE: producer
+#      KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
+      KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "true"
+    networks:
+      - ${GLOBAL_NETWORK:-kafka}
+  kafka-broker-5:
+    image: confluentinc/cp-kafka:latest
+    hostname: kafka-broker-5
+    ports:
+      - "10005:10005"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 5
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: INTERNAL://kafka-broker-5:9092,EXTERNAL://:10005
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-broker-5:9092,EXTERNAL://:10005
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT,DOCKER:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_COMPRESSION_TYPE: producer
+#      KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
+      KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "true"
+    networks:
+      - ${GLOBAL_NETWORK:-kafka}
+  kafka-broker-6:
+    image: confluentinc/cp-kafka:latest
+    hostname: kafka-broker-6
+    ports:
+      - "10006:10006"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 6
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: INTERNAL://kafka-broker-6:9092,EXTERNAL://:10006
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-broker-6:9092,EXTERNAL://:10006
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT,DOCKER:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_COMPRESSION_TYPE: producer
+#      KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
+      KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "true"
+    networks:
+      - ${GLOBAL_NETWORK:-kafka}
+  kafka-broker-7:
+    image: confluentinc/cp-kafka:latest
+    hostname: kafka-broker-7
+    ports:
+      - "10007:10007"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 7
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: INTERNAL://kafka-broker-7:9092,EXTERNAL://:10007
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-broker-7:9092,EXTERNAL://:10007
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT,DOCKER:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_COMPRESSION_TYPE: producer
+#      KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
+      KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "true"
+    networks:
+      - ${GLOBAL_NETWORK:-kafka}
+  kafka-broker-8:
+    image: confluentinc/cp-kafka:latest
+    hostname: kafka-broker-8
+    ports:
+      - "10008:10008"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 8
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: INTERNAL://kafka-broker-8:9092,EXTERNAL://:10008
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-broker-8:9092,EXTERNAL://:10008
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT,DOCKER:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_COMPRESSION_TYPE: producer
+#      KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
+      KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "true"
+    networks:
+      - ${GLOBAL_NETWORK:-kafka}
+  kafka-broker-9:
+    image: confluentinc/cp-kafka:latest
+    hostname: kafka-broker-9
+    ports:
+      - "10009:10009"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 9
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: INTERNAL://kafka-broker-9:9092,EXTERNAL://:10009
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-broker-9:9092,EXTERNAL://:10009
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT,DOCKER:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_COMPRESSION_TYPE: producer
+#      KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
+      KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "true"
+    networks:
+      - ${GLOBAL_NETWORK:-kafka}

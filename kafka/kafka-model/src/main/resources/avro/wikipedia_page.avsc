@@ -1,0 +1,39 @@
+{
+    "namespace": "com.kaziabid.learn.wams.kafka.model.avro",
+    "type": "record",
+    "name": "WikipediaPageAvroModel",
+    "fields": [
+        {
+            "name": "title",
+            "type": "string"
+        },
+        {
+            "name": "displayTitle",
+            "type": "string"
+        },
+        {
+            "name": "wikibaseItem",
+            "type": "string"
+        },
+        {
+            "name": "pageId",
+            "type": "string"
+        },
+        {
+            "name": "tid",
+            "type": "string"
+        },
+        {
+            "name": "timestamp",
+            "type": "string"
+        },
+        {
+            "name": "extract",
+            "type": "string"
+        },
+        {
+            "name": "normalizedTitle",
+            "type": "string"
+        }
+    ]
+}
