@@ -5,34 +5,14 @@ services:
     image: wams/wikipedia-to-kafka-service:${SERVICE_VERSION:-latest}
     hostname: wikipedia-to-kafka-service
     user: root
-    entrypoint: ["check-config-server-started.sh"]
     ports:
       - "5005:5005"
       - "5108:8080"
     volumes:
       - "./docker-logs:/workspaces/wikipedia-to-kafka-service/logs"
-      - "./check-config-server-started.sh:/usr/local/bin/check-config-server-started.sh"
     environment:
       - "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -Xms128m -Xmx1024m"
       - "KAFKA-CONFIG.WIKIPEDIA_TOPIC-NAME=wikipedia.topic"
       - "KAFKA-CONFIG.WIKIPEDIA_BOOTSTRAP-SERVERS=kafka1:19092, kafka2:19093, kafka3:19094"
       - "KAFKA-CONFIG.WIKIPEDIA_SCHEMA-REGISTRY-URL=http://kafka-schema-registry:8081"
       - "SPRING.CONFIG.IMPORT=configserver:http://config-server:8888"
-    depends_on:
-      - config-server
-#    networks:
-#      - ${GLOBAL_NETWORK:-services}
-  config-server:
-    hostname: config-server
-    image: wams/config-server:${SERVICE_VERSION:-latest}
-    user: root
-    ports:
-      - "5006:5006"
-    volumes:
-      - "./docker-logs:/workspaces/config-server/logs"
-    environment:
-      - "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5006 -Xms128m -Xmx1024m"
-    depends_on:
-      - kafka-schema-registry
-#    networks:
-#      - ${GLOBAL_NETWORK:-services}

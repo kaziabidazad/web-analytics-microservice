@@ -18,7 +18,7 @@ public record KafkaWikipediaConfigData(
 
         String topicName,
 
-        List<String> topicsNamesToCreate,
+        List<String> topicNamesToCreate,
 
         Integer numberOfpartitions,
 

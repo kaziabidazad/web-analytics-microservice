@@ -25,6 +25,7 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kaziabid.learn.wams.commonconfig.data.KafkaWikipediaConfigData;
+import com.kaziabid.learn.wams.commonconfig.data.WikipediaConfigData;
 import com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel;
 import com.kaziabid.learn.wams.kafka.producer.service.KafkaProducer;
 import com.kaziabid.learn.wams.w2k.model.MostRead;
@@ -40,25 +41,26 @@ import com.kaziabid.learn.wams.w2k.service.transformer.WikipediaPageToAvroTransf
 public class WikipediaDataExtractor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WikipediaDataExtractor.class);
-    private final String wikipediadateformat = "yyyy/MM/dd";
-    private final String wikipediaFeaturedFeedUrlString = "https://en.wikipedia.org/api/rest_v1/feed/featured";
     private ObjectMapper objectMapper;
 
     private final KafkaWikipediaConfigData kafkaWikipediaConfigData;
     private final KafkaProducer<Long, WikipediaPageAvroModel> kafkaProducer;
     private final WikipediaPageToAvroTransformer avroTransformer;
+    private final WikipediaConfigData wikipediaConfigData;
 
     public WikipediaDataExtractor(KafkaWikipediaConfigData kafkaWikipediaConfigData,
-            KafkaProducer<Long, WikipediaPageAvroModel> kafkaProducer, WikipediaPageToAvroTransformer avroTransformer) {
+            KafkaProducer<Long, WikipediaPageAvroModel> kafkaProducer, WikipediaPageToAvroTransformer avroTransformer,
+            WikipediaConfigData wikipediaConfigData) {
         this.kafkaWikipediaConfigData = kafkaWikipediaConfigData;
         this.kafkaProducer = kafkaProducer;
         this.avroTransformer = avroTransformer;
+        this.wikipediaConfigData = wikipediaConfigData;
         objectMapper = new ObjectMapper();
     }
 
     @Async
     public void extractWikipediaPagePerDay(LocalDate startDate) {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(wikipediadateformat);
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(wikipediaConfigData.wikipediadateformat());
         String datepath = startDate.format(dateTimeFormatter);
         LOGGER.info("extracting for date: {}", datepath);
 
@@ -66,7 +68,7 @@ public class WikipediaDataExtractor {
         Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, "application/json");
         try {
             HttpGet getRequest = new HttpGet(
-                    new URIBuilder(wikipediaFeaturedFeedUrlString).appendPath(datepath).build());
+                    new URIBuilder(wikipediaConfigData.wikipediaFeaturedFeedUrl()).appendPath(datepath).build());
             getRequest.addHeader(acceptHeader);
             WikiFeedResult feedResult = httpClient.execute(getRequest, new HttpClientResponseHandler<WikiFeedResult>() {
                 @Override

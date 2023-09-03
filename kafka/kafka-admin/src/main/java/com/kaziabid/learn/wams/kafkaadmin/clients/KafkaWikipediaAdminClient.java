@@ -73,7 +73,7 @@ public class KafkaWikipediaAdminClient {
         Integer maxRetry = retryConfigData.getMaxAttempts();
         Integer multiplier = retryConfigData.getMultiplier().intValue();
         Long sleepTime = retryConfigData.getSleepTimeMs();
-        for (String topicName : kafkaWikipediaConfigData.topicsNamesToCreate()) {
+        for (String topicName : kafkaWikipediaConfigData.topicNamesToCreate()) {
             while (!isTopicCreated(topics, topicName)) {
                 checkMaxRetry(retryCount++, maxRetry);
                 sleep(sleepTime);
@@ -152,7 +152,7 @@ public class KafkaWikipediaAdminClient {
     }
 
     private CreateTopicsResult doCreateTopics(RetryContext retryContext) {
-        List<String> topicNames = kafkaWikipediaConfigData.topicsNamesToCreate();
+        List<String> topicNames = kafkaWikipediaConfigData.topicNamesToCreate();
         LOGGER.info("Creating {} topic(s): {} , attempt {} ", topicNames.size(), topicNames,
                 retryContext.getRetryCount());
         List<NewTopic> kafkaTopics = topicNames.stream().map(t -> {
@@ -175,7 +175,7 @@ public class KafkaWikipediaAdminClient {
 
     private Collection<TopicListing> doGetTopics(RetryContext retryContext)
             throws InterruptedException, ExecutionException {
-        LOGGER.info("Reading Kafka Topic{}, attempt: {}", kafkaWikipediaConfigData.topicsNamesToCreate(),
+        LOGGER.info("Reading Kafka Topic{}, attempt: {}", kafkaWikipediaConfigData.topicNamesToCreate(),
                 retryContext.getRetryCount());
         Collection<TopicListing> topics = adminClient.listTopics().listings().get();
         if (topics != null)

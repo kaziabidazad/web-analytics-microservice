@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.apache.avro.specific.SpecificRecordBase;
 import org.apache.kafka.clients.producer.ProducerConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
@@ -24,6 +26,8 @@ public class KafkaProducerCofig<K extends Serializable, V extends SpecificRecord
     private final KafkaWikipediaProducerConfigData kafkaWikipediaProducerConfigData;
 
     private final KafkaWikipediaConfigData kafkaWikipediaConfigData;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(KafkaProducerCofig.class);
 
     /**
      * @param kafkaWikipediaProducerConfigData
@@ -50,7 +54,10 @@ public class KafkaProducerCofig<K extends Serializable, V extends SpecificRecord
         properties.put(ProducerConfig.ACKS_CONFIG, kafkaWikipediaProducerConfigData.acks());
         properties.put(ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG, kafkaWikipediaProducerConfigData.requestTimeoutMs());
         properties.put(ProducerConfig.RETRIES_CONFIG, kafkaWikipediaProducerConfigData.retryCount());
-
+        LOGGER.debug("kafka Producer Config::");
+        properties.forEach((k, v) -> {
+            LOGGER.debug("{} : {} ", k, v);
+        });
         return properties;
     }
 

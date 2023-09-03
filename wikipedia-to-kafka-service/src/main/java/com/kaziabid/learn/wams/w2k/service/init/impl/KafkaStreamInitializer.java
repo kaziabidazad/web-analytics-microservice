@@ -36,7 +36,7 @@ public class KafkaStreamInitializer implements StreamInitializer {
         kafkaWikipediaAdminClient.createTopics();
         kafkaWikipediaAdminClient.checkSchemaRegistry();
         LOGGER.info("Topics with name {} is ready for operations!",
-                kafkaWikipediaConfigData.topicsNamesToCreate().toArray());
+                kafkaWikipediaConfigData.topicNamesToCreate().toArray());
 
     }
 

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.kaziabid.learn.wams.commonconfig.data.KafkaWikipediaProducerConfigData;
 import com.kaziabid.learn.wams.w2k.service.WikipediaFeedRunner;
+import com.kaziabid.learn.wams.w2k.service.init.StreamInitializer;
 
 /**
  * @author Kazi
@@ -21,21 +22,26 @@ public class StartupRunner implements ApplicationRunner {
     private static final Logger LOGGER = LoggerFactory.getLogger(StartupRunner.class);
 
     private WikipediaFeedRunner wikipediaFeedRunner;
-    private KafkaWikipediaProducerConfigData kafkaWikipediaProducerConfigData;
+    private final KafkaWikipediaProducerConfigData kafkaWikipediaProducerConfigData;
+    private final StreamInitializer streamInitializer;
 
     /**
      * @param wikipediaFeedRunner
      */
     public StartupRunner(WikipediaFeedRunner wikipediaFeedRunner,
-            KafkaWikipediaProducerConfigData kafkaWikipediaProducerConfigData) {
+            KafkaWikipediaProducerConfigData kafkaWikipediaProducerConfigData, StreamInitializer streamInitializer) {
         super();
         this.wikipediaFeedRunner = wikipediaFeedRunner;
         this.kafkaWikipediaProducerConfigData = kafkaWikipediaProducerConfigData;
+        this.streamInitializer = streamInitializer;
     }
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        kafkaWikipediaProducerConfigData.batchSize();
+        LOGGER.info("Initializing Kafka Setup");
+        streamInitializer.init();
+        LOGGER.info("***********************************************************************");
+        LOGGER.info("Initializing Kafka Setup");
         String appStartedBanner = """
 
                 ***************************************************************************

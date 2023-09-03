@@ -1,0 +1,32 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        bootstrap: true
+        git:
+          uri: https://github.com/kaziabidazad/web-analytics-microservice-config.git
+          clone-on-start: true
+          default-label: master
+    fail-fast: true
+    
+management:
+  server:
+    port: 8888
+  endpoints:
+    enable-by-default: true
+    web:
+      exposure:
+        include: "*"
+#        exclude: "env,beans"
+#      base-path: /manage
+  endpoint:
+    shutdown:
+      enabled: true
+#    info:
+#      enabled: true
+  
