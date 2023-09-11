@@ -28,6 +28,7 @@ services:
     user: root
     ports:
       - "5006:5006"
+      - "8888:8888"
     volumes:
       - "./docker-logs:/workspaces/config-server/logs"
     environment:
