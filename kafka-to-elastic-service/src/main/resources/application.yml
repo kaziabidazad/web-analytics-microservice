@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: kafka-to-elastic-service
+  profiles:
+    active: kafka_to_elastic
+  config:
+    import: configserver:http://config-server:8888
+  cloud:
+    config:
+      name: kafka-to-elastic-service, config-client
+      uri: http://config-server:8888
+    fail-fast: true
+    retry:
+       initial-interval: 2500
+       multiplier: 1.5
+       max-attempts: 1000
+       max-interval: 30000
+       
+
