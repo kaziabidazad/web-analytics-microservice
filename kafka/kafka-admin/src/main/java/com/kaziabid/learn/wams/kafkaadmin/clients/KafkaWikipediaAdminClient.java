@@ -67,7 +67,7 @@ public class KafkaWikipediaAdminClient {
         checkTopicsCreated();
     }
 
-    private void checkTopicsCreated() {
+    public void checkTopicsCreated() {
         Collection<TopicListing> topics = getTopics();
         int retryCount = 1;
         Integer maxRetry = retryConfigData.getMaxAttempts();

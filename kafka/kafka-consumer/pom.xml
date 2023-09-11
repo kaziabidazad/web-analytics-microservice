@@ -7,9 +7,10 @@
         <artifactId>kafka</artifactId>
         <version>0.0.1</version>
     </parent>
-    <artifactId>kafka-producer</artifactId>
-    <name>kafka-producer</name>
-    <description>Kafka Producr module</description>
+    <artifactId>kafka-consumer</artifactId>
+    <name>kafka-consumer</name>
+    <description>Kafka Consumer Microservice which will consume wiki pages from
+        the kafka topic and then push it to a search engine</description>
 
     <dependencies>
         <dependency>
@@ -22,13 +23,5 @@
             <artifactId>common-config</artifactId>
             <version>0.0.1</version>
         </dependency>
-        <!--
-        https://mvnrepository.com/artifact/io.confluent/kafka-avro-serializer -->
-        <dependency>
-            <groupId>io.confluent</groupId>
-            <artifactId>kafka-avro-serializer</artifactId>
-        </dependency>
-
     </dependencies>
-
 </project>
