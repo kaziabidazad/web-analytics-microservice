@@ -89,20 +89,24 @@ public class AsyncWikipediaFeedRunner implements WikipediaFeedRunner, Runnable {
     public void run() {
         LOGGER.info("Starting to extract Wikimedia Feed..");
         running.set(true);
-        LocalDate localDate = startDate;
+        LocalDate queryDate = startDate;
         while (running.get()) {
+            LocalDate currentDate = LocalDate.now();
             try {
-                LOGGER.debug("Executing Wikipedia feed");
-                wikipediaDataExtractor.extractWikipediaPagePerDay(localDate);
-                localDate = localDate.plusDays(1);
-                Thread.sleep(200);
+                if (queryDate.isBefore(currentDate)) {
+                    LOGGER.debug("Executing Wikipedia feed");
+                    wikipediaDataExtractor.extractWikipediaPagePerDay(queryDate);
+                    queryDate = queryDate.plusDays(1);
+                    Thread.sleep(2000);
+                } else {
+                    Thread.sleep(60 * 60 * 1000);// sleep for 1 hour
+                }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 LOGGER.info("Interrupted the thread..");
-                LOGGER.info("Last extracted date: {} ", localDate.toString());
+                LOGGER.info("Last extracted date: {} ", queryDate.toString());
             }
         }
-
     }
 
 }
