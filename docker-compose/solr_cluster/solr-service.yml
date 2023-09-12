@@ -10,11 +10,12 @@ services:
       - "../../data/solr1:/var/solr"
     environment:
       ZK_HOST: solr-zoo1:2181,solr-zoo2:2181,solr-zoo3:2181
+      SOLR_LOG_LEVEL: INFO
     depends_on:
       - solr-zoo1
       - solr-zoo2
       - solr-zoo3
-    command: bash -c "chown -R 18983:8983 /var/solr &&  runuser -u solr -- /opt/solr/docker/scripts/docker-entrypoint.sh -v"
+    command: bash -c "chown -R 18983:8983 /var/solr &&  runuser -u solr -- /opt/solr/docker/scripts/docker-entrypoint.sh -q"
     networks:
       - solr_cluster
   solr2:
@@ -27,11 +28,12 @@ services:
       - "../../data/solr2:/var/solr"
     environment:
       ZK_HOST: solr-zoo1:2181,solr-zoo2:2181,solr-zoo3:2181
+      SOLR_LOG_LEVEL: INFO
     depends_on:
       - solr-zoo1
       - solr-zoo2
       - solr-zoo3
-    command: bash -c "chown -R 18983:8983 /var/solr &&  runuser -u solr -- /opt/solr/docker/scripts/docker-entrypoint.sh -v"
+    command: bash -c "chown -R 18983:8983 /var/solr &&  runuser -u solr -- /opt/solr/docker/scripts/docker-entrypoint.sh -q"
     networks:
       - solr_cluster
   solr3:
@@ -44,11 +46,12 @@ services:
       - "../../data/solr3:/var/solr"
     environment:
       ZK_HOST: solr-zoo1:2181,solr-zoo2:2181,solr-zoo3:2181
+      SOLR_LOG_LEVEL: INFO
     depends_on:
       - solr-zoo1
       - solr-zoo2
       - solr-zoo3
-    command: bash -c "chown -R 18983:8983 /var/solr &&  runuser -u solr -- /opt/solr/docker/scripts/docker-entrypoint.sh -v"
+    command: bash -c "chown -R 18983:8983 /var/solr &&  runuser -u solr -- /opt/solr/docker/scripts/docker-entrypoint.sh -q"
     networks:
       - solr_cluster
   solr-zoo1:
