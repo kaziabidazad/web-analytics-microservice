@@ -16,8 +16,8 @@ services:
       - solr-zoo2
       - solr-zoo3
     command: bash -c "chown -R 18983:8983 /var/solr &&  runuser -u solr -- /opt/solr/docker/scripts/docker-entrypoint.sh -q"
-    networks:
-      - solr_cluster
+    networks: 
+      - wams
   solr2:
     image: solr:9.3.0
     hostname: solr2
@@ -34,8 +34,8 @@ services:
       - solr-zoo2
       - solr-zoo3
     command: bash -c "chown -R 18983:8983 /var/solr &&  runuser -u solr -- /opt/solr/docker/scripts/docker-entrypoint.sh -q"
-    networks:
-      - solr_cluster
+    networks: 
+      - wams
   solr3:
     image: solr:9.3.0
     hostname: solr3
@@ -52,8 +52,8 @@ services:
       - solr-zoo2
       - solr-zoo3
     command: bash -c "chown -R 18983:8983 /var/solr &&  runuser -u solr -- /opt/solr/docker/scripts/docker-entrypoint.sh -q"
-    networks:
-      - solr_cluster
+    networks: 
+      - wams
   solr-zoo1:
     image: zookeeper:3.9.0
     restart: always
@@ -67,8 +67,8 @@ services:
       ZOO_4LW_COMMANDS_WHITELIST: mntr,conf,ruok,stat,isro
     volumes:
       - "../../data/solr-zoo1:/data"
-    networks:
-      - solr_cluster
+    networks: 
+      - wams
   solr-zoo2:
     image: zookeeper:3.9.0
     restart: always
@@ -82,8 +82,8 @@ services:
       ZOO_4LW_COMMANDS_WHITELIST: mntr,conf,ruok,stat,isro
     volumes:
       - "../../data/solr-zoo2:/data"
-    networks:
-      - solr_cluster
+    networks: 
+      - wams
   solr-zoo3:
     image: zookeeper:3.9.0
     restart: always
@@ -97,10 +97,12 @@ services:
       ZOO_4LW_COMMANDS_WHITELIST: mntr,conf,ruok,stat,isro
     volumes:
       - "../../data/solr-zoo3:/data"
-    networks:
-      - solr_cluster
+    networks: 
+      - wams
 volumes:
   data:
+
 networks:
-  solr_cluster:
-    driver: bridge
+  wams:
+    name: wams
+    external: true

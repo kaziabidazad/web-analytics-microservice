@@ -11,6 +11,8 @@ services:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_SERVER_ID: 1
       ZOOKEEPER_SERVERS: zoo1:2888:3888;zoo2:2888:3888;zoo3:2888:3888
+    networks: 
+      - wams
 
   zoo2:
     image: confluentinc/cp-zookeeper:latest
@@ -22,6 +24,8 @@ services:
       ZOOKEEPER_CLIENT_PORT: 2182
       ZOOKEEPER_SERVER_ID: 2
       ZOOKEEPER_SERVERS: zoo1:2888:3888;zoo2:2888:3888;zoo3:2888:3888
+    networks: 
+      - wams
 
   zoo3:
     image: confluentinc/cp-zookeeper:latest
@@ -33,6 +37,8 @@ services:
       ZOOKEEPER_CLIENT_PORT: 2183
       ZOOKEEPER_SERVER_ID: 3
       ZOOKEEPER_SERVERS: zoo1:2888:3888;zoo2:2888:3888;zoo3:2888:3888
+    networks: 
+      - wams
 
 
   kafka1:
@@ -57,6 +63,8 @@ services:
       - zoo2
       - zoo3
     restart: on-failure
+    networks: 
+      - wams
 
   kafka2:
     image: confluentinc/cp-kafka:latest
@@ -80,6 +88,8 @@ services:
       - zoo2
       - zoo3
     restart: on-failure
+    networks: 
+      - wams
 
   kafka3:
     image: confluentinc/cp-kafka:latest
@@ -103,6 +113,8 @@ services:
       - zoo2
       - zoo3
     restart: on-failure
+    networks: 
+      - wams
 
   kafka-schema-registry:
     image: confluentinc/cp-schema-registry:latest
@@ -122,3 +134,5 @@ services:
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'PLAINTEXT://kafka1:19092,PLAINTEXT://kafka2:19093,PLAINTEXT://kafka3:19094'
       SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
     restart: on-failure
+    networks: 
+      - wams
