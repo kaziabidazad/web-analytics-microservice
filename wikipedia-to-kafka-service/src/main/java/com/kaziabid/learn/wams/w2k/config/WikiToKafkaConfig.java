@@ -8,6 +8,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.kaziabid.learn.wams.common.dto.wiki.WikiPage;
+import com.kaziabid.learn.wams.common.sedes.WikipediaPageDeserializer;
+
 /**
  * @author Kazi
  */
@@ -20,5 +25,15 @@ public class WikiToKafkaConfig {
         ExecutorService threadPoolExecutor = (ThreadPoolExecutor) Executors
                 .newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         return threadPoolExecutor;
+    }
+    
+    @Bean("wikiPageObjectMapper")
+    public ObjectMapper wikiPageObjectMapper() {
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleModule wikiPageModule = new SimpleModule();
+        wikiPageModule.addDeserializer(WikiPage.class,
+                new WikipediaPageDeserializer());
+        mapper.registerModule(wikiPageModule);
+        return mapper;
     }
 }
