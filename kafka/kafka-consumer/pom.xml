@@ -16,12 +16,12 @@
         <dependency>
             <groupId>com.kaziabid.learn.wams</groupId>
             <artifactId>kafka-model</artifactId>
-            <version>0.0.1</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.kaziabid.learn.wams</groupId>
             <artifactId>common-config</artifactId>
-            <version>0.0.1</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>

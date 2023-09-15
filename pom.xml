@@ -18,6 +18,7 @@
         Application.</description>
 
     <properties>
+        <spring-data-solr-version>4.3.15</spring-data-solr-version>
         <maven.compiler.release>17</maven.compiler.release>
         <spring-cloud-starter-config-version>4.0.4</spring-cloud-starter-config-version>
         <kafka-avro-serializer-version>7.4.0</kafka-avro-serializer-version>
@@ -116,6 +117,7 @@
         <module>config-server</module>
         <module>kafka-to-elastic-service</module>
         <module>kafka-to-solr-service</module>
+        <module>common-dto</module>
     </modules>
 
 
