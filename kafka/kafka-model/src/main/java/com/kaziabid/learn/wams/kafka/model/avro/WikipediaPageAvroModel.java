@@ -9,953 +9,1394 @@ import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.SchemaStore;
 import org.apache.avro.specific.SpecificData;
-import org.apache.avro.util.Utf8;
 
 @org.apache.avro.specific.AvroGenerated
-public class WikipediaPageAvroModel extends org.apache.avro.specific.SpecificRecordBase
-        implements org.apache.avro.specific.SpecificRecord {
-    private static final long serialVersionUID = 2388426404822714440L;
+public class WikipediaPageAvroModel extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
+  private static final long serialVersionUID = -5866772630865814184L;
 
-    public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse(
-            "{\"type\":\"record\",\"name\":\"WikipediaPageAvroModel\",\"namespace\":\"com.kaziabid.learn.wams.kafka.model.avro\",\"fields\":[{\"name\":\"title\",\"type\":\"string\"},{\"name\":\"displayTitle\",\"type\":\"string\"},{\"name\":\"wikibaseItem\",\"type\":\"string\"},{\"name\":\"pageId\",\"type\":\"string\"},{\"name\":\"tid\",\"type\":\"string\"},{\"name\":\"timestamp\",\"type\":\"string\"},{\"name\":\"extract\",\"type\":\"string\"},{\"name\":\"normalizedTitle\",\"type\":\"string\"}]}");
 
-    public static org.apache.avro.Schema getClassSchema() {
-        return SCHEMA$;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"WikipediaPageAvroModel\",\"namespace\":\"com.kaziabid.learn.wams.kafka.model.avro\",\"fields\":[{\"name\":\"lang\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"type\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"title\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"displayTitle\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"wikibaseItem\",\"type\":[{\"type\":\"string\",\"avro.java.string\":\"String\"},\"null\"]},{\"name\":\"pageId\",\"type\":\"long\"},{\"name\":\"tid\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"timestamp\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"extract\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"extractHtml\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"normalizedTitle\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"thumbnail\",\"type\":[{\"type\":\"string\",\"avro.java.string\":\"String\"},\"null\"]},{\"name\":\"originalImage\",\"type\":[{\"type\":\"string\",\"avro.java.string\":\"String\"},\"null\"]},{\"name\":\"pageUrl\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}");
+  public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
+
+  private static final SpecificData MODEL$ = new SpecificData();
+
+  private static final BinaryMessageEncoder<WikipediaPageAvroModel> ENCODER =
+      new BinaryMessageEncoder<>(MODEL$, SCHEMA$);
+
+  private static final BinaryMessageDecoder<WikipediaPageAvroModel> DECODER =
+      new BinaryMessageDecoder<>(MODEL$, SCHEMA$);
+
+  /**
+   * Return the BinaryMessageEncoder instance used by this class.
+   * @return the message encoder used by this class
+   */
+  public static BinaryMessageEncoder<WikipediaPageAvroModel> getEncoder() {
+    return ENCODER;
+  }
+
+  /**
+   * Return the BinaryMessageDecoder instance used by this class.
+   * @return the message decoder used by this class
+   */
+  public static BinaryMessageDecoder<WikipediaPageAvroModel> getDecoder() {
+    return DECODER;
+  }
+
+  /**
+   * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
+   * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
+   * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
+   */
+  public static BinaryMessageDecoder<WikipediaPageAvroModel> createDecoder(SchemaStore resolver) {
+    return new BinaryMessageDecoder<>(MODEL$, SCHEMA$, resolver);
+  }
+
+  /**
+   * Serializes this WikipediaPageAvroModel to a ByteBuffer.
+   * @return a buffer holding the serialized data for this instance
+   * @throws java.io.IOException if this instance could not be serialized
+   */
+  public java.nio.ByteBuffer toByteBuffer() throws java.io.IOException {
+    return ENCODER.encode(this);
+  }
+
+  /**
+   * Deserializes a WikipediaPageAvroModel from a ByteBuffer.
+   * @param b a byte buffer holding serialized data for an instance of this class
+   * @return a WikipediaPageAvroModel instance decoded from the given buffer
+   * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
+   */
+  public static WikipediaPageAvroModel fromByteBuffer(
+      java.nio.ByteBuffer b) throws java.io.IOException {
+    return DECODER.decode(b);
+  }
+
+  private java.lang.String lang;
+  private java.lang.String type;
+  private java.lang.String title;
+  private java.lang.String displayTitle;
+  private java.lang.String wikibaseItem;
+  private long pageId;
+  private java.lang.String tid;
+  private java.lang.String timestamp;
+  private java.lang.String extract;
+  private java.lang.String extractHtml;
+  private java.lang.String normalizedTitle;
+  private java.lang.String thumbnail;
+  private java.lang.String originalImage;
+  private java.lang.String pageUrl;
+
+  /**
+   * Default constructor.  Note that this does not initialize fields
+   * to their default values from the schema.  If that is desired then
+   * one should use <code>newBuilder()</code>.
+   */
+  public WikipediaPageAvroModel() {}
+
+  /**
+   * All-args constructor.
+   * @param lang The new value for lang
+   * @param type The new value for type
+   * @param title The new value for title
+   * @param displayTitle The new value for displayTitle
+   * @param wikibaseItem The new value for wikibaseItem
+   * @param pageId The new value for pageId
+   * @param tid The new value for tid
+   * @param timestamp The new value for timestamp
+   * @param extract The new value for extract
+   * @param extractHtml The new value for extractHtml
+   * @param normalizedTitle The new value for normalizedTitle
+   * @param thumbnail The new value for thumbnail
+   * @param originalImage The new value for originalImage
+   * @param pageUrl The new value for pageUrl
+   */
+  public WikipediaPageAvroModel(java.lang.String lang, java.lang.String type, java.lang.String title, java.lang.String displayTitle, java.lang.String wikibaseItem, java.lang.Long pageId, java.lang.String tid, java.lang.String timestamp, java.lang.String extract, java.lang.String extractHtml, java.lang.String normalizedTitle, java.lang.String thumbnail, java.lang.String originalImage, java.lang.String pageUrl) {
+    this.lang = lang;
+    this.type = type;
+    this.title = title;
+    this.displayTitle = displayTitle;
+    this.wikibaseItem = wikibaseItem;
+    this.pageId = pageId;
+    this.tid = tid;
+    this.timestamp = timestamp;
+    this.extract = extract;
+    this.extractHtml = extractHtml;
+    this.normalizedTitle = normalizedTitle;
+    this.thumbnail = thumbnail;
+    this.originalImage = originalImage;
+    this.pageUrl = pageUrl;
+  }
+
+  @Override
+  public org.apache.avro.specific.SpecificData getSpecificData() { return MODEL$; }
+
+  @Override
+  public org.apache.avro.Schema getSchema() { return SCHEMA$; }
+
+  // Used by DatumWriter.  Applications should not call.
+  @Override
+  public java.lang.Object get(int field$) {
+    switch (field$) {
+    case 0: return lang;
+    case 1: return type;
+    case 2: return title;
+    case 3: return displayTitle;
+    case 4: return wikibaseItem;
+    case 5: return pageId;
+    case 6: return tid;
+    case 7: return timestamp;
+    case 8: return extract;
+    case 9: return extractHtml;
+    case 10: return normalizedTitle;
+    case 11: return thumbnail;
+    case 12: return originalImage;
+    case 13: return pageUrl;
+    default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
+    }
+  }
+
+  // Used by DatumReader.  Applications should not call.
+  @Override
+  public void put(int field$, java.lang.Object value$) {
+    switch (field$) {
+    case 0: lang = value$ != null ? value$.toString() : null; break;
+    case 1: type = value$ != null ? value$.toString() : null; break;
+    case 2: title = value$ != null ? value$.toString() : null; break;
+    case 3: displayTitle = value$ != null ? value$.toString() : null; break;
+    case 4: wikibaseItem = value$ != null ? value$.toString() : null; break;
+    case 5: pageId = (java.lang.Long)value$; break;
+    case 6: tid = value$ != null ? value$.toString() : null; break;
+    case 7: timestamp = value$ != null ? value$.toString() : null; break;
+    case 8: extract = value$ != null ? value$.toString() : null; break;
+    case 9: extractHtml = value$ != null ? value$.toString() : null; break;
+    case 10: normalizedTitle = value$ != null ? value$.toString() : null; break;
+    case 11: thumbnail = value$ != null ? value$.toString() : null; break;
+    case 12: originalImage = value$ != null ? value$.toString() : null; break;
+    case 13: pageUrl = value$ != null ? value$.toString() : null; break;
+    default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
+    }
+  }
+
+  /**
+   * Gets the value of the 'lang' field.
+   * @return The value of the 'lang' field.
+   */
+  public java.lang.String getLang() {
+    return lang;
+  }
+
+
+  /**
+   * Sets the value of the 'lang' field.
+   * @param value the value to set.
+   */
+  public void setLang(java.lang.String value) {
+    this.lang = value;
+  }
+
+  /**
+   * Gets the value of the 'type' field.
+   * @return The value of the 'type' field.
+   */
+  public java.lang.String getType() {
+    return type;
+  }
+
+
+  /**
+   * Sets the value of the 'type' field.
+   * @param value the value to set.
+   */
+  public void setType(java.lang.String value) {
+    this.type = value;
+  }
+
+  /**
+   * Gets the value of the 'title' field.
+   * @return The value of the 'title' field.
+   */
+  public java.lang.String getTitle() {
+    return title;
+  }
+
+
+  /**
+   * Sets the value of the 'title' field.
+   * @param value the value to set.
+   */
+  public void setTitle(java.lang.String value) {
+    this.title = value;
+  }
+
+  /**
+   * Gets the value of the 'displayTitle' field.
+   * @return The value of the 'displayTitle' field.
+   */
+  public java.lang.String getDisplayTitle() {
+    return displayTitle;
+  }
+
+
+  /**
+   * Sets the value of the 'displayTitle' field.
+   * @param value the value to set.
+   */
+  public void setDisplayTitle(java.lang.String value) {
+    this.displayTitle = value;
+  }
+
+  /**
+   * Gets the value of the 'wikibaseItem' field.
+   * @return The value of the 'wikibaseItem' field.
+   */
+  public java.lang.String getWikibaseItem() {
+    return wikibaseItem;
+  }
+
+
+  /**
+   * Sets the value of the 'wikibaseItem' field.
+   * @param value the value to set.
+   */
+  public void setWikibaseItem(java.lang.String value) {
+    this.wikibaseItem = value;
+  }
+
+  /**
+   * Gets the value of the 'pageId' field.
+   * @return The value of the 'pageId' field.
+   */
+  public long getPageId() {
+    return pageId;
+  }
+
+
+  /**
+   * Sets the value of the 'pageId' field.
+   * @param value the value to set.
+   */
+  public void setPageId(long value) {
+    this.pageId = value;
+  }
+
+  /**
+   * Gets the value of the 'tid' field.
+   * @return The value of the 'tid' field.
+   */
+  public java.lang.String getTid() {
+    return tid;
+  }
+
+
+  /**
+   * Sets the value of the 'tid' field.
+   * @param value the value to set.
+   */
+  public void setTid(java.lang.String value) {
+    this.tid = value;
+  }
+
+  /**
+   * Gets the value of the 'timestamp' field.
+   * @return The value of the 'timestamp' field.
+   */
+  public java.lang.String getTimestamp() {
+    return timestamp;
+  }
+
+
+  /**
+   * Sets the value of the 'timestamp' field.
+   * @param value the value to set.
+   */
+  public void setTimestamp(java.lang.String value) {
+    this.timestamp = value;
+  }
+
+  /**
+   * Gets the value of the 'extract' field.
+   * @return The value of the 'extract' field.
+   */
+  public java.lang.String getExtract() {
+    return extract;
+  }
+
+
+  /**
+   * Sets the value of the 'extract' field.
+   * @param value the value to set.
+   */
+  public void setExtract(java.lang.String value) {
+    this.extract = value;
+  }
+
+  /**
+   * Gets the value of the 'extractHtml' field.
+   * @return The value of the 'extractHtml' field.
+   */
+  public java.lang.String getExtractHtml() {
+    return extractHtml;
+  }
+
+
+  /**
+   * Sets the value of the 'extractHtml' field.
+   * @param value the value to set.
+   */
+  public void setExtractHtml(java.lang.String value) {
+    this.extractHtml = value;
+  }
+
+  /**
+   * Gets the value of the 'normalizedTitle' field.
+   * @return The value of the 'normalizedTitle' field.
+   */
+  public java.lang.String getNormalizedTitle() {
+    return normalizedTitle;
+  }
+
+
+  /**
+   * Sets the value of the 'normalizedTitle' field.
+   * @param value the value to set.
+   */
+  public void setNormalizedTitle(java.lang.String value) {
+    this.normalizedTitle = value;
+  }
+
+  /**
+   * Gets the value of the 'thumbnail' field.
+   * @return The value of the 'thumbnail' field.
+   */
+  public java.lang.String getThumbnail() {
+    return thumbnail;
+  }
+
+
+  /**
+   * Sets the value of the 'thumbnail' field.
+   * @param value the value to set.
+   */
+  public void setThumbnail(java.lang.String value) {
+    this.thumbnail = value;
+  }
+
+  /**
+   * Gets the value of the 'originalImage' field.
+   * @return The value of the 'originalImage' field.
+   */
+  public java.lang.String getOriginalImage() {
+    return originalImage;
+  }
+
+
+  /**
+   * Sets the value of the 'originalImage' field.
+   * @param value the value to set.
+   */
+  public void setOriginalImage(java.lang.String value) {
+    this.originalImage = value;
+  }
+
+  /**
+   * Gets the value of the 'pageUrl' field.
+   * @return The value of the 'pageUrl' field.
+   */
+  public java.lang.String getPageUrl() {
+    return pageUrl;
+  }
+
+
+  /**
+   * Sets the value of the 'pageUrl' field.
+   * @param value the value to set.
+   */
+  public void setPageUrl(java.lang.String value) {
+    this.pageUrl = value;
+  }
+
+  /**
+   * Creates a new WikipediaPageAvroModel RecordBuilder.
+   * @return A new WikipediaPageAvroModel RecordBuilder
+   */
+  public static com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder newBuilder() {
+    return new com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder();
+  }
+
+  /**
+   * Creates a new WikipediaPageAvroModel RecordBuilder by copying an existing Builder.
+   * @param other The existing builder to copy.
+   * @return A new WikipediaPageAvroModel RecordBuilder
+   */
+  public static com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder newBuilder(com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder other) {
+    if (other == null) {
+      return new com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder();
+    } else {
+      return new com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder(other);
+    }
+  }
+
+  /**
+   * Creates a new WikipediaPageAvroModel RecordBuilder by copying an existing WikipediaPageAvroModel instance.
+   * @param other The existing instance to copy.
+   * @return A new WikipediaPageAvroModel RecordBuilder
+   */
+  public static com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder newBuilder(com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel other) {
+    if (other == null) {
+      return new com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder();
+    } else {
+      return new com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder(other);
+    }
+  }
+
+  /**
+   * RecordBuilder for WikipediaPageAvroModel instances.
+   */
+  @org.apache.avro.specific.AvroGenerated
+  public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<WikipediaPageAvroModel>
+    implements org.apache.avro.data.RecordBuilder<WikipediaPageAvroModel> {
+
+    private java.lang.String lang;
+    private java.lang.String type;
+    private java.lang.String title;
+    private java.lang.String displayTitle;
+    private java.lang.String wikibaseItem;
+    private long pageId;
+    private java.lang.String tid;
+    private java.lang.String timestamp;
+    private java.lang.String extract;
+    private java.lang.String extractHtml;
+    private java.lang.String normalizedTitle;
+    private java.lang.String thumbnail;
+    private java.lang.String originalImage;
+    private java.lang.String pageUrl;
+
+    /** Creates a new Builder */
+    private Builder() {
+      super(SCHEMA$, MODEL$);
     }
 
-    private static final SpecificData MODEL$ = new SpecificData();
-
-    private static final BinaryMessageEncoder<WikipediaPageAvroModel> ENCODER = new BinaryMessageEncoder<>(MODEL$,
-            SCHEMA$);
-
-    private static final BinaryMessageDecoder<WikipediaPageAvroModel> DECODER = new BinaryMessageDecoder<>(MODEL$,
-            SCHEMA$);
-
     /**
-     * Return the BinaryMessageEncoder instance used by this class.
-     * 
-     * @return the message encoder used by this class
+     * Creates a Builder by copying an existing Builder.
+     * @param other The existing Builder to copy.
      */
-    public static BinaryMessageEncoder<WikipediaPageAvroModel> getEncoder() {
-        return ENCODER;
+    private Builder(com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder other) {
+      super(other);
+      if (isValidValue(fields()[0], other.lang)) {
+        this.lang = data().deepCopy(fields()[0].schema(), other.lang);
+        fieldSetFlags()[0] = other.fieldSetFlags()[0];
+      }
+      if (isValidValue(fields()[1], other.type)) {
+        this.type = data().deepCopy(fields()[1].schema(), other.type);
+        fieldSetFlags()[1] = other.fieldSetFlags()[1];
+      }
+      if (isValidValue(fields()[2], other.title)) {
+        this.title = data().deepCopy(fields()[2].schema(), other.title);
+        fieldSetFlags()[2] = other.fieldSetFlags()[2];
+      }
+      if (isValidValue(fields()[3], other.displayTitle)) {
+        this.displayTitle = data().deepCopy(fields()[3].schema(), other.displayTitle);
+        fieldSetFlags()[3] = other.fieldSetFlags()[3];
+      }
+      if (isValidValue(fields()[4], other.wikibaseItem)) {
+        this.wikibaseItem = data().deepCopy(fields()[4].schema(), other.wikibaseItem);
+        fieldSetFlags()[4] = other.fieldSetFlags()[4];
+      }
+      if (isValidValue(fields()[5], other.pageId)) {
+        this.pageId = data().deepCopy(fields()[5].schema(), other.pageId);
+        fieldSetFlags()[5] = other.fieldSetFlags()[5];
+      }
+      if (isValidValue(fields()[6], other.tid)) {
+        this.tid = data().deepCopy(fields()[6].schema(), other.tid);
+        fieldSetFlags()[6] = other.fieldSetFlags()[6];
+      }
+      if (isValidValue(fields()[7], other.timestamp)) {
+        this.timestamp = data().deepCopy(fields()[7].schema(), other.timestamp);
+        fieldSetFlags()[7] = other.fieldSetFlags()[7];
+      }
+      if (isValidValue(fields()[8], other.extract)) {
+        this.extract = data().deepCopy(fields()[8].schema(), other.extract);
+        fieldSetFlags()[8] = other.fieldSetFlags()[8];
+      }
+      if (isValidValue(fields()[9], other.extractHtml)) {
+        this.extractHtml = data().deepCopy(fields()[9].schema(), other.extractHtml);
+        fieldSetFlags()[9] = other.fieldSetFlags()[9];
+      }
+      if (isValidValue(fields()[10], other.normalizedTitle)) {
+        this.normalizedTitle = data().deepCopy(fields()[10].schema(), other.normalizedTitle);
+        fieldSetFlags()[10] = other.fieldSetFlags()[10];
+      }
+      if (isValidValue(fields()[11], other.thumbnail)) {
+        this.thumbnail = data().deepCopy(fields()[11].schema(), other.thumbnail);
+        fieldSetFlags()[11] = other.fieldSetFlags()[11];
+      }
+      if (isValidValue(fields()[12], other.originalImage)) {
+        this.originalImage = data().deepCopy(fields()[12].schema(), other.originalImage);
+        fieldSetFlags()[12] = other.fieldSetFlags()[12];
+      }
+      if (isValidValue(fields()[13], other.pageUrl)) {
+        this.pageUrl = data().deepCopy(fields()[13].schema(), other.pageUrl);
+        fieldSetFlags()[13] = other.fieldSetFlags()[13];
+      }
     }
 
     /**
-     * Return the BinaryMessageDecoder instance used by this class.
-     * 
-     * @return the message decoder used by this class
-     */
-    public static BinaryMessageDecoder<WikipediaPageAvroModel> getDecoder() {
-        return DECODER;
-    }
-
-    /**
-     * Create a new BinaryMessageDecoder instance for this class that uses the
-     * specified {@link SchemaStore}.
-     * 
-     * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
-     * @return a BinaryMessageDecoder instance for this class backed by the given
-     *         SchemaStore
-     */
-    public static BinaryMessageDecoder<WikipediaPageAvroModel> createDecoder(SchemaStore resolver) {
-        return new BinaryMessageDecoder<>(MODEL$, SCHEMA$, resolver);
-    }
-
-    /**
-     * Serializes this WikipediaPageAvroModel to a ByteBuffer.
-     * 
-     * @return a buffer holding the serialized data for this instance
-     * @throws java.io.IOException if this instance could not be serialized
-     */
-    public java.nio.ByteBuffer toByteBuffer() throws java.io.IOException {
-        return ENCODER.encode(this);
-    }
-
-    /**
-     * Deserializes a WikipediaPageAvroModel from a ByteBuffer.
-     * 
-     * @param b a byte buffer holding serialized data for an instance of this class
-     * @return a WikipediaPageAvroModel instance decoded from the given buffer
-     * @throws java.io.IOException if the given bytes could not be deserialized into
-     *                             an instance of this class
-     */
-    public static WikipediaPageAvroModel fromByteBuffer(java.nio.ByteBuffer b) throws java.io.IOException {
-        return DECODER.decode(b);
-    }
-
-    private java.lang.CharSequence title;
-    private java.lang.CharSequence displayTitle;
-    private java.lang.CharSequence wikibaseItem;
-    private java.lang.CharSequence pageId;
-    private java.lang.CharSequence tid;
-    private java.lang.CharSequence timestamp;
-    private java.lang.CharSequence extract;
-    private java.lang.CharSequence normalizedTitle;
-
-    /**
-     * Default constructor. Note that this does not initialize fields to their
-     * default values from the schema. If that is desired then one should use
-     * <code>newBuilder()</code>.
-     */
-    public WikipediaPageAvroModel() {
-    }
-
-    /**
-     * All-args constructor.
-     * 
-     * @param title           The new value for title
-     * @param displayTitle    The new value for displayTitle
-     * @param wikibaseItem    The new value for wikibaseItem
-     * @param pageId          The new value for pageId
-     * @param tid             The new value for tid
-     * @param timestamp       The new value for timestamp
-     * @param extract         The new value for extract
-     * @param normalizedTitle The new value for normalizedTitle
-     */
-    public WikipediaPageAvroModel(java.lang.CharSequence title, java.lang.CharSequence displayTitle,
-            java.lang.CharSequence wikibaseItem, java.lang.CharSequence pageId, java.lang.CharSequence tid,
-            java.lang.CharSequence timestamp, java.lang.CharSequence extract, java.lang.CharSequence normalizedTitle) {
-        this.title = title;
-        this.displayTitle = displayTitle;
-        this.wikibaseItem = wikibaseItem;
-        this.pageId = pageId;
-        this.tid = tid;
-        this.timestamp = timestamp;
-        this.extract = extract;
-        this.normalizedTitle = normalizedTitle;
-    }
-
-    @Override
-    public org.apache.avro.specific.SpecificData getSpecificData() {
-        return MODEL$;
-    }
-
-    @Override
-    public org.apache.avro.Schema getSchema() {
-        return SCHEMA$;
-    }
-
-    // Used by DatumWriter. Applications should not call.
-    @Override
-    public java.lang.Object get(int field$) {
-        switch (field$) {
-        case 0:
-            return title;
-        case 1:
-            return displayTitle;
-        case 2:
-            return wikibaseItem;
-        case 3:
-            return pageId;
-        case 4:
-            return tid;
-        case 5:
-            return timestamp;
-        case 6:
-            return extract;
-        case 7:
-            return normalizedTitle;
-        default:
-            throw new IndexOutOfBoundsException("Invalid index: " + field$);
-        }
-    }
-
-    // Used by DatumReader. Applications should not call.
-    @Override
-    public void put(int field$, java.lang.Object value$) {
-        switch (field$) {
-        case 0:
-            title = (java.lang.CharSequence) value$;
-            break;
-        case 1:
-            displayTitle = (java.lang.CharSequence) value$;
-            break;
-        case 2:
-            wikibaseItem = (java.lang.CharSequence) value$;
-            break;
-        case 3:
-            pageId = (java.lang.CharSequence) value$;
-            break;
-        case 4:
-            tid = (java.lang.CharSequence) value$;
-            break;
-        case 5:
-            timestamp = (java.lang.CharSequence) value$;
-            break;
-        case 6:
-            extract = (java.lang.CharSequence) value$;
-            break;
-        case 7:
-            normalizedTitle = (java.lang.CharSequence) value$;
-            break;
-        default:
-            throw new IndexOutOfBoundsException("Invalid index: " + field$);
-        }
-    }
-
-    /**
-     * Gets the value of the 'title' field.
-     * 
-     * @return The value of the 'title' field.
-     */
-    public java.lang.CharSequence getTitle() {
-        return title;
-    }
-
-    /**
-     * Sets the value of the 'title' field.
-     * 
-     * @param value the value to set.
-     */
-    public void setTitle(java.lang.CharSequence value) {
-        this.title = value;
-    }
-
-    /**
-     * Gets the value of the 'displayTitle' field.
-     * 
-     * @return The value of the 'displayTitle' field.
-     */
-    public java.lang.CharSequence getDisplayTitle() {
-        return displayTitle;
-    }
-
-    /**
-     * Sets the value of the 'displayTitle' field.
-     * 
-     * @param value the value to set.
-     */
-    public void setDisplayTitle(java.lang.CharSequence value) {
-        this.displayTitle = value;
-    }
-
-    /**
-     * Gets the value of the 'wikibaseItem' field.
-     * 
-     * @return The value of the 'wikibaseItem' field.
-     */
-    public java.lang.CharSequence getWikibaseItem() {
-        return wikibaseItem;
-    }
-
-    /**
-     * Sets the value of the 'wikibaseItem' field.
-     * 
-     * @param value the value to set.
-     */
-    public void setWikibaseItem(java.lang.CharSequence value) {
-        this.wikibaseItem = value;
-    }
-
-    /**
-     * Gets the value of the 'pageId' field.
-     * 
-     * @return The value of the 'pageId' field.
-     */
-    public java.lang.CharSequence getPageId() {
-        return pageId;
-    }
-
-    /**
-     * Sets the value of the 'pageId' field.
-     * 
-     * @param value the value to set.
-     */
-    public void setPageId(java.lang.CharSequence value) {
-        this.pageId = value;
-    }
-
-    /**
-     * Gets the value of the 'tid' field.
-     * 
-     * @return The value of the 'tid' field.
-     */
-    public java.lang.CharSequence getTid() {
-        return tid;
-    }
-
-    /**
-     * Sets the value of the 'tid' field.
-     * 
-     * @param value the value to set.
-     */
-    public void setTid(java.lang.CharSequence value) {
-        this.tid = value;
-    }
-
-    /**
-     * Gets the value of the 'timestamp' field.
-     * 
-     * @return The value of the 'timestamp' field.
-     */
-    public java.lang.CharSequence getTimestamp() {
-        return timestamp;
-    }
-
-    /**
-     * Sets the value of the 'timestamp' field.
-     * 
-     * @param value the value to set.
-     */
-    public void setTimestamp(java.lang.CharSequence value) {
-        this.timestamp = value;
-    }
-
-    /**
-     * Gets the value of the 'extract' field.
-     * 
-     * @return The value of the 'extract' field.
-     */
-    public java.lang.CharSequence getExtract() {
-        return extract;
-    }
-
-    /**
-     * Sets the value of the 'extract' field.
-     * 
-     * @param value the value to set.
-     */
-    public void setExtract(java.lang.CharSequence value) {
-        this.extract = value;
-    }
-
-    /**
-     * Gets the value of the 'normalizedTitle' field.
-     * 
-     * @return The value of the 'normalizedTitle' field.
-     */
-    public java.lang.CharSequence getNormalizedTitle() {
-        return normalizedTitle;
-    }
-
-    /**
-     * Sets the value of the 'normalizedTitle' field.
-     * 
-     * @param value the value to set.
-     */
-    public void setNormalizedTitle(java.lang.CharSequence value) {
-        this.normalizedTitle = value;
-    }
-
-    /**
-     * Creates a new WikipediaPageAvroModel RecordBuilder.
-     * 
-     * @return A new WikipediaPageAvroModel RecordBuilder
-     */
-    public static com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder newBuilder() {
-        return new com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder();
-    }
-
-    /**
-     * Creates a new WikipediaPageAvroModel RecordBuilder by copying an existing
-     * Builder.
-     * 
-     * @param other The existing builder to copy.
-     * @return A new WikipediaPageAvroModel RecordBuilder
-     */
-    public static com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder newBuilder(
-            com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder other) {
-        if (other == null) {
-            return new com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder();
-        } else {
-            return new com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder(other);
-        }
-    }
-
-    /**
-     * Creates a new WikipediaPageAvroModel RecordBuilder by copying an existing
-     * WikipediaPageAvroModel instance.
-     * 
+     * Creates a Builder by copying an existing WikipediaPageAvroModel instance
      * @param other The existing instance to copy.
-     * @return A new WikipediaPageAvroModel RecordBuilder
      */
-    public static com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder newBuilder(
-            com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel other) {
-        if (other == null) {
-            return new com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder();
-        } else {
-            return new com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder(other);
-        }
+    private Builder(com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel other) {
+      super(SCHEMA$, MODEL$);
+      if (isValidValue(fields()[0], other.lang)) {
+        this.lang = data().deepCopy(fields()[0].schema(), other.lang);
+        fieldSetFlags()[0] = true;
+      }
+      if (isValidValue(fields()[1], other.type)) {
+        this.type = data().deepCopy(fields()[1].schema(), other.type);
+        fieldSetFlags()[1] = true;
+      }
+      if (isValidValue(fields()[2], other.title)) {
+        this.title = data().deepCopy(fields()[2].schema(), other.title);
+        fieldSetFlags()[2] = true;
+      }
+      if (isValidValue(fields()[3], other.displayTitle)) {
+        this.displayTitle = data().deepCopy(fields()[3].schema(), other.displayTitle);
+        fieldSetFlags()[3] = true;
+      }
+      if (isValidValue(fields()[4], other.wikibaseItem)) {
+        this.wikibaseItem = data().deepCopy(fields()[4].schema(), other.wikibaseItem);
+        fieldSetFlags()[4] = true;
+      }
+      if (isValidValue(fields()[5], other.pageId)) {
+        this.pageId = data().deepCopy(fields()[5].schema(), other.pageId);
+        fieldSetFlags()[5] = true;
+      }
+      if (isValidValue(fields()[6], other.tid)) {
+        this.tid = data().deepCopy(fields()[6].schema(), other.tid);
+        fieldSetFlags()[6] = true;
+      }
+      if (isValidValue(fields()[7], other.timestamp)) {
+        this.timestamp = data().deepCopy(fields()[7].schema(), other.timestamp);
+        fieldSetFlags()[7] = true;
+      }
+      if (isValidValue(fields()[8], other.extract)) {
+        this.extract = data().deepCopy(fields()[8].schema(), other.extract);
+        fieldSetFlags()[8] = true;
+      }
+      if (isValidValue(fields()[9], other.extractHtml)) {
+        this.extractHtml = data().deepCopy(fields()[9].schema(), other.extractHtml);
+        fieldSetFlags()[9] = true;
+      }
+      if (isValidValue(fields()[10], other.normalizedTitle)) {
+        this.normalizedTitle = data().deepCopy(fields()[10].schema(), other.normalizedTitle);
+        fieldSetFlags()[10] = true;
+      }
+      if (isValidValue(fields()[11], other.thumbnail)) {
+        this.thumbnail = data().deepCopy(fields()[11].schema(), other.thumbnail);
+        fieldSetFlags()[11] = true;
+      }
+      if (isValidValue(fields()[12], other.originalImage)) {
+        this.originalImage = data().deepCopy(fields()[12].schema(), other.originalImage);
+        fieldSetFlags()[12] = true;
+      }
+      if (isValidValue(fields()[13], other.pageUrl)) {
+        this.pageUrl = data().deepCopy(fields()[13].schema(), other.pageUrl);
+        fieldSetFlags()[13] = true;
+      }
     }
 
     /**
-     * RecordBuilder for WikipediaPageAvroModel instances.
-     */
-    @org.apache.avro.specific.AvroGenerated
-    public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<WikipediaPageAvroModel>
-            implements org.apache.avro.data.RecordBuilder<WikipediaPageAvroModel> {
-
-        private java.lang.CharSequence title;
-        private java.lang.CharSequence displayTitle;
-        private java.lang.CharSequence wikibaseItem;
-        private java.lang.CharSequence pageId;
-        private java.lang.CharSequence tid;
-        private java.lang.CharSequence timestamp;
-        private java.lang.CharSequence extract;
-        private java.lang.CharSequence normalizedTitle;
-
-        /** Creates a new Builder */
-        private Builder() {
-            super(SCHEMA$, MODEL$);
-        }
-
-        /**
-         * Creates a Builder by copying an existing Builder.
-         * 
-         * @param other The existing Builder to copy.
-         */
-        private Builder(com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder other) {
-            super(other);
-            if (isValidValue(fields()[0], other.title)) {
-                this.title = data().deepCopy(fields()[0].schema(), other.title);
-                fieldSetFlags()[0] = other.fieldSetFlags()[0];
-            }
-            if (isValidValue(fields()[1], other.displayTitle)) {
-                this.displayTitle = data().deepCopy(fields()[1].schema(), other.displayTitle);
-                fieldSetFlags()[1] = other.fieldSetFlags()[1];
-            }
-            if (isValidValue(fields()[2], other.wikibaseItem)) {
-                this.wikibaseItem = data().deepCopy(fields()[2].schema(), other.wikibaseItem);
-                fieldSetFlags()[2] = other.fieldSetFlags()[2];
-            }
-            if (isValidValue(fields()[3], other.pageId)) {
-                this.pageId = data().deepCopy(fields()[3].schema(), other.pageId);
-                fieldSetFlags()[3] = other.fieldSetFlags()[3];
-            }
-            if (isValidValue(fields()[4], other.tid)) {
-                this.tid = data().deepCopy(fields()[4].schema(), other.tid);
-                fieldSetFlags()[4] = other.fieldSetFlags()[4];
-            }
-            if (isValidValue(fields()[5], other.timestamp)) {
-                this.timestamp = data().deepCopy(fields()[5].schema(), other.timestamp);
-                fieldSetFlags()[5] = other.fieldSetFlags()[5];
-            }
-            if (isValidValue(fields()[6], other.extract)) {
-                this.extract = data().deepCopy(fields()[6].schema(), other.extract);
-                fieldSetFlags()[6] = other.fieldSetFlags()[6];
-            }
-            if (isValidValue(fields()[7], other.normalizedTitle)) {
-                this.normalizedTitle = data().deepCopy(fields()[7].schema(), other.normalizedTitle);
-                fieldSetFlags()[7] = other.fieldSetFlags()[7];
-            }
-        }
-
-        /**
-         * Creates a Builder by copying an existing WikipediaPageAvroModel instance
-         * 
-         * @param other The existing instance to copy.
-         */
-        private Builder(com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel other) {
-            super(SCHEMA$, MODEL$);
-            if (isValidValue(fields()[0], other.title)) {
-                this.title = data().deepCopy(fields()[0].schema(), other.title);
-                fieldSetFlags()[0] = true;
-            }
-            if (isValidValue(fields()[1], other.displayTitle)) {
-                this.displayTitle = data().deepCopy(fields()[1].schema(), other.displayTitle);
-                fieldSetFlags()[1] = true;
-            }
-            if (isValidValue(fields()[2], other.wikibaseItem)) {
-                this.wikibaseItem = data().deepCopy(fields()[2].schema(), other.wikibaseItem);
-                fieldSetFlags()[2] = true;
-            }
-            if (isValidValue(fields()[3], other.pageId)) {
-                this.pageId = data().deepCopy(fields()[3].schema(), other.pageId);
-                fieldSetFlags()[3] = true;
-            }
-            if (isValidValue(fields()[4], other.tid)) {
-                this.tid = data().deepCopy(fields()[4].schema(), other.tid);
-                fieldSetFlags()[4] = true;
-            }
-            if (isValidValue(fields()[5], other.timestamp)) {
-                this.timestamp = data().deepCopy(fields()[5].schema(), other.timestamp);
-                fieldSetFlags()[5] = true;
-            }
-            if (isValidValue(fields()[6], other.extract)) {
-                this.extract = data().deepCopy(fields()[6].schema(), other.extract);
-                fieldSetFlags()[6] = true;
-            }
-            if (isValidValue(fields()[7], other.normalizedTitle)) {
-                this.normalizedTitle = data().deepCopy(fields()[7].schema(), other.normalizedTitle);
-                fieldSetFlags()[7] = true;
-            }
-        }
-
-        /**
-         * Gets the value of the 'title' field.
-         * 
-         * @return The value.
-         */
-        public java.lang.CharSequence getTitle() {
-            return title;
-        }
-
-        /**
-         * Sets the value of the 'title' field.
-         * 
-         * @param value The value of 'title'.
-         * @return This builder.
-         */
-        public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder setTitle(
-                java.lang.CharSequence value) {
-            validate(fields()[0], value);
-            this.title = value;
-            fieldSetFlags()[0] = true;
-            return this;
-        }
-
-        /**
-         * Checks whether the 'title' field has been set.
-         * 
-         * @return True if the 'title' field has been set, false otherwise.
-         */
-        public boolean hasTitle() {
-            return fieldSetFlags()[0];
-        }
-
-        /**
-         * Clears the value of the 'title' field.
-         * 
-         * @return This builder.
-         */
-        public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder clearTitle() {
-            title = null;
-            fieldSetFlags()[0] = false;
-            return this;
-        }
-
-        /**
-         * Gets the value of the 'displayTitle' field.
-         * 
-         * @return The value.
-         */
-        public java.lang.CharSequence getDisplayTitle() {
-            return displayTitle;
-        }
-
-        /**
-         * Sets the value of the 'displayTitle' field.
-         * 
-         * @param value The value of 'displayTitle'.
-         * @return This builder.
-         */
-        public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder setDisplayTitle(
-                java.lang.CharSequence value) {
-            validate(fields()[1], value);
-            this.displayTitle = value;
-            fieldSetFlags()[1] = true;
-            return this;
-        }
-
-        /**
-         * Checks whether the 'displayTitle' field has been set.
-         * 
-         * @return True if the 'displayTitle' field has been set, false otherwise.
-         */
-        public boolean hasDisplayTitle() {
-            return fieldSetFlags()[1];
-        }
-
-        /**
-         * Clears the value of the 'displayTitle' field.
-         * 
-         * @return This builder.
-         */
-        public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder clearDisplayTitle() {
-            displayTitle = null;
-            fieldSetFlags()[1] = false;
-            return this;
-        }
-
-        /**
-         * Gets the value of the 'wikibaseItem' field.
-         * 
-         * @return The value.
-         */
-        public java.lang.CharSequence getWikibaseItem() {
-            return wikibaseItem;
-        }
-
-        /**
-         * Sets the value of the 'wikibaseItem' field.
-         * 
-         * @param value The value of 'wikibaseItem'.
-         * @return This builder.
-         */
-        public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder setWikibaseItem(
-                java.lang.CharSequence value) {
-            validate(fields()[2], value);
-            this.wikibaseItem = value;
-            fieldSetFlags()[2] = true;
-            return this;
-        }
-
-        /**
-         * Checks whether the 'wikibaseItem' field has been set.
-         * 
-         * @return True if the 'wikibaseItem' field has been set, false otherwise.
-         */
-        public boolean hasWikibaseItem() {
-            return fieldSetFlags()[2];
-        }
-
-        /**
-         * Clears the value of the 'wikibaseItem' field.
-         * 
-         * @return This builder.
-         */
-        public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder clearWikibaseItem() {
-            wikibaseItem = null;
-            fieldSetFlags()[2] = false;
-            return this;
-        }
-
-        /**
-         * Gets the value of the 'pageId' field.
-         * 
-         * @return The value.
-         */
-        public java.lang.CharSequence getPageId() {
-            return pageId;
-        }
-
-        /**
-         * Sets the value of the 'pageId' field.
-         * 
-         * @param value The value of 'pageId'.
-         * @return This builder.
-         */
-        public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder setPageId(
-                java.lang.CharSequence value) {
-            validate(fields()[3], value);
-            this.pageId = value;
-            fieldSetFlags()[3] = true;
-            return this;
-        }
-
-        /**
-         * Checks whether the 'pageId' field has been set.
-         * 
-         * @return True if the 'pageId' field has been set, false otherwise.
-         */
-        public boolean hasPageId() {
-            return fieldSetFlags()[3];
-        }
-
-        /**
-         * Clears the value of the 'pageId' field.
-         * 
-         * @return This builder.
-         */
-        public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder clearPageId() {
-            pageId = null;
-            fieldSetFlags()[3] = false;
-            return this;
-        }
-
-        /**
-         * Gets the value of the 'tid' field.
-         * 
-         * @return The value.
-         */
-        public java.lang.CharSequence getTid() {
-            return tid;
-        }
-
-        /**
-         * Sets the value of the 'tid' field.
-         * 
-         * @param value The value of 'tid'.
-         * @return This builder.
-         */
-        public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder setTid(
-                java.lang.CharSequence value) {
-            validate(fields()[4], value);
-            this.tid = value;
-            fieldSetFlags()[4] = true;
-            return this;
-        }
-
-        /**
-         * Checks whether the 'tid' field has been set.
-         * 
-         * @return True if the 'tid' field has been set, false otherwise.
-         */
-        public boolean hasTid() {
-            return fieldSetFlags()[4];
-        }
-
-        /**
-         * Clears the value of the 'tid' field.
-         * 
-         * @return This builder.
-         */
-        public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder clearTid() {
-            tid = null;
-            fieldSetFlags()[4] = false;
-            return this;
-        }
-
-        /**
-         * Gets the value of the 'timestamp' field.
-         * 
-         * @return The value.
-         */
-        public java.lang.CharSequence getTimestamp() {
-            return timestamp;
-        }
-
-        /**
-         * Sets the value of the 'timestamp' field.
-         * 
-         * @param value The value of 'timestamp'.
-         * @return This builder.
-         */
-        public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder setTimestamp(
-                java.lang.CharSequence value) {
-            validate(fields()[5], value);
-            this.timestamp = value;
-            fieldSetFlags()[5] = true;
-            return this;
-        }
-
-        /**
-         * Checks whether the 'timestamp' field has been set.
-         * 
-         * @return True if the 'timestamp' field has been set, false otherwise.
-         */
-        public boolean hasTimestamp() {
-            return fieldSetFlags()[5];
-        }
-
-        /**
-         * Clears the value of the 'timestamp' field.
-         * 
-         * @return This builder.
-         */
-        public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder clearTimestamp() {
-            timestamp = null;
-            fieldSetFlags()[5] = false;
-            return this;
-        }
-
-        /**
-         * Gets the value of the 'extract' field.
-         * 
-         * @return The value.
-         */
-        public java.lang.CharSequence getExtract() {
-            return extract;
-        }
-
-        /**
-         * Sets the value of the 'extract' field.
-         * 
-         * @param value The value of 'extract'.
-         * @return This builder.
-         */
-        public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder setExtract(
-                java.lang.CharSequence value) {
-            validate(fields()[6], value);
-            this.extract = value;
-            fieldSetFlags()[6] = true;
-            return this;
-        }
-
-        /**
-         * Checks whether the 'extract' field has been set.
-         * 
-         * @return True if the 'extract' field has been set, false otherwise.
-         */
-        public boolean hasExtract() {
-            return fieldSetFlags()[6];
-        }
-
-        /**
-         * Clears the value of the 'extract' field.
-         * 
-         * @return This builder.
-         */
-        public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder clearExtract() {
-            extract = null;
-            fieldSetFlags()[6] = false;
-            return this;
-        }
-
-        /**
-         * Gets the value of the 'normalizedTitle' field.
-         * 
-         * @return The value.
-         */
-        public java.lang.CharSequence getNormalizedTitle() {
-            return normalizedTitle;
-        }
-
-        /**
-         * Sets the value of the 'normalizedTitle' field.
-         * 
-         * @param value The value of 'normalizedTitle'.
-         * @return This builder.
-         */
-        public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder setNormalizedTitle(
-                java.lang.CharSequence value) {
-            validate(fields()[7], value);
-            this.normalizedTitle = value;
-            fieldSetFlags()[7] = true;
-            return this;
-        }
-
-        /**
-         * Checks whether the 'normalizedTitle' field has been set.
-         * 
-         * @return True if the 'normalizedTitle' field has been set, false otherwise.
-         */
-        public boolean hasNormalizedTitle() {
-            return fieldSetFlags()[7];
-        }
-
-        /**
-         * Clears the value of the 'normalizedTitle' field.
-         * 
-         * @return This builder.
-         */
-        public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder clearNormalizedTitle() {
-            normalizedTitle = null;
-            fieldSetFlags()[7] = false;
-            return this;
-        }
-
-        @Override
-        public WikipediaPageAvroModel build() {
-            try {
-                WikipediaPageAvroModel record = new WikipediaPageAvroModel();
-                record.title = fieldSetFlags()[0] ? this.title : (java.lang.CharSequence) defaultValue(fields()[0]);
-                record.displayTitle = fieldSetFlags()[1] ? this.displayTitle
-                        : (java.lang.CharSequence) defaultValue(fields()[1]);
-                record.wikibaseItem = fieldSetFlags()[2] ? this.wikibaseItem
-                        : (java.lang.CharSequence) defaultValue(fields()[2]);
-                record.pageId = fieldSetFlags()[3] ? this.pageId : (java.lang.CharSequence) defaultValue(fields()[3]);
-                record.tid = fieldSetFlags()[4] ? this.tid : (java.lang.CharSequence) defaultValue(fields()[4]);
-                record.timestamp = fieldSetFlags()[5] ? this.timestamp
-                        : (java.lang.CharSequence) defaultValue(fields()[5]);
-                record.extract = fieldSetFlags()[6] ? this.extract : (java.lang.CharSequence) defaultValue(fields()[6]);
-                record.normalizedTitle = fieldSetFlags()[7] ? this.normalizedTitle
-                        : (java.lang.CharSequence) defaultValue(fields()[7]);
-                return record;
-            } catch (org.apache.avro.AvroMissingFieldException e) {
-                throw e;
-            } catch (java.lang.Exception e) {
-                throw new org.apache.avro.AvroRuntimeException(e);
-            }
-        }
+      * Gets the value of the 'lang' field.
+      * @return The value.
+      */
+    public java.lang.String getLang() {
+      return lang;
     }
 
-    @SuppressWarnings("unchecked")
-    private static final org.apache.avro.io.DatumWriter<WikipediaPageAvroModel> WRITER$ = (org.apache.avro.io.DatumWriter<WikipediaPageAvroModel>) MODEL$
-            .createDatumWriter(SCHEMA$);
+
+    /**
+      * Sets the value of the 'lang' field.
+      * @param value The value of 'lang'.
+      * @return This builder.
+      */
+    public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder setLang(java.lang.String value) {
+      validate(fields()[0], value);
+      this.lang = value;
+      fieldSetFlags()[0] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'lang' field has been set.
+      * @return True if the 'lang' field has been set, false otherwise.
+      */
+    public boolean hasLang() {
+      return fieldSetFlags()[0];
+    }
+
+
+    /**
+      * Clears the value of the 'lang' field.
+      * @return This builder.
+      */
+    public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder clearLang() {
+      lang = null;
+      fieldSetFlags()[0] = false;
+      return this;
+    }
+
+    /**
+      * Gets the value of the 'type' field.
+      * @return The value.
+      */
+    public java.lang.String getType() {
+      return type;
+    }
+
+
+    /**
+      * Sets the value of the 'type' field.
+      * @param value The value of 'type'.
+      * @return This builder.
+      */
+    public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder setType(java.lang.String value) {
+      validate(fields()[1], value);
+      this.type = value;
+      fieldSetFlags()[1] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'type' field has been set.
+      * @return True if the 'type' field has been set, false otherwise.
+      */
+    public boolean hasType() {
+      return fieldSetFlags()[1];
+    }
+
+
+    /**
+      * Clears the value of the 'type' field.
+      * @return This builder.
+      */
+    public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder clearType() {
+      type = null;
+      fieldSetFlags()[1] = false;
+      return this;
+    }
+
+    /**
+      * Gets the value of the 'title' field.
+      * @return The value.
+      */
+    public java.lang.String getTitle() {
+      return title;
+    }
+
+
+    /**
+      * Sets the value of the 'title' field.
+      * @param value The value of 'title'.
+      * @return This builder.
+      */
+    public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder setTitle(java.lang.String value) {
+      validate(fields()[2], value);
+      this.title = value;
+      fieldSetFlags()[2] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'title' field has been set.
+      * @return True if the 'title' field has been set, false otherwise.
+      */
+    public boolean hasTitle() {
+      return fieldSetFlags()[2];
+    }
+
+
+    /**
+      * Clears the value of the 'title' field.
+      * @return This builder.
+      */
+    public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder clearTitle() {
+      title = null;
+      fieldSetFlags()[2] = false;
+      return this;
+    }
+
+    /**
+      * Gets the value of the 'displayTitle' field.
+      * @return The value.
+      */
+    public java.lang.String getDisplayTitle() {
+      return displayTitle;
+    }
+
+
+    /**
+      * Sets the value of the 'displayTitle' field.
+      * @param value The value of 'displayTitle'.
+      * @return This builder.
+      */
+    public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder setDisplayTitle(java.lang.String value) {
+      validate(fields()[3], value);
+      this.displayTitle = value;
+      fieldSetFlags()[3] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'displayTitle' field has been set.
+      * @return True if the 'displayTitle' field has been set, false otherwise.
+      */
+    public boolean hasDisplayTitle() {
+      return fieldSetFlags()[3];
+    }
+
+
+    /**
+      * Clears the value of the 'displayTitle' field.
+      * @return This builder.
+      */
+    public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder clearDisplayTitle() {
+      displayTitle = null;
+      fieldSetFlags()[3] = false;
+      return this;
+    }
+
+    /**
+      * Gets the value of the 'wikibaseItem' field.
+      * @return The value.
+      */
+    public java.lang.String getWikibaseItem() {
+      return wikibaseItem;
+    }
+
+
+    /**
+      * Sets the value of the 'wikibaseItem' field.
+      * @param value The value of 'wikibaseItem'.
+      * @return This builder.
+      */
+    public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder setWikibaseItem(java.lang.String value) {
+      validate(fields()[4], value);
+      this.wikibaseItem = value;
+      fieldSetFlags()[4] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'wikibaseItem' field has been set.
+      * @return True if the 'wikibaseItem' field has been set, false otherwise.
+      */
+    public boolean hasWikibaseItem() {
+      return fieldSetFlags()[4];
+    }
+
+
+    /**
+      * Clears the value of the 'wikibaseItem' field.
+      * @return This builder.
+      */
+    public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder clearWikibaseItem() {
+      wikibaseItem = null;
+      fieldSetFlags()[4] = false;
+      return this;
+    }
+
+    /**
+      * Gets the value of the 'pageId' field.
+      * @return The value.
+      */
+    public long getPageId() {
+      return pageId;
+    }
+
+
+    /**
+      * Sets the value of the 'pageId' field.
+      * @param value The value of 'pageId'.
+      * @return This builder.
+      */
+    public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder setPageId(long value) {
+      validate(fields()[5], value);
+      this.pageId = value;
+      fieldSetFlags()[5] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'pageId' field has been set.
+      * @return True if the 'pageId' field has been set, false otherwise.
+      */
+    public boolean hasPageId() {
+      return fieldSetFlags()[5];
+    }
+
+
+    /**
+      * Clears the value of the 'pageId' field.
+      * @return This builder.
+      */
+    public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder clearPageId() {
+      fieldSetFlags()[5] = false;
+      return this;
+    }
+
+    /**
+      * Gets the value of the 'tid' field.
+      * @return The value.
+      */
+    public java.lang.String getTid() {
+      return tid;
+    }
+
+
+    /**
+      * Sets the value of the 'tid' field.
+      * @param value The value of 'tid'.
+      * @return This builder.
+      */
+    public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder setTid(java.lang.String value) {
+      validate(fields()[6], value);
+      this.tid = value;
+      fieldSetFlags()[6] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'tid' field has been set.
+      * @return True if the 'tid' field has been set, false otherwise.
+      */
+    public boolean hasTid() {
+      return fieldSetFlags()[6];
+    }
+
+
+    /**
+      * Clears the value of the 'tid' field.
+      * @return This builder.
+      */
+    public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder clearTid() {
+      tid = null;
+      fieldSetFlags()[6] = false;
+      return this;
+    }
+
+    /**
+      * Gets the value of the 'timestamp' field.
+      * @return The value.
+      */
+    public java.lang.String getTimestamp() {
+      return timestamp;
+    }
+
+
+    /**
+      * Sets the value of the 'timestamp' field.
+      * @param value The value of 'timestamp'.
+      * @return This builder.
+      */
+    public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder setTimestamp(java.lang.String value) {
+      validate(fields()[7], value);
+      this.timestamp = value;
+      fieldSetFlags()[7] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'timestamp' field has been set.
+      * @return True if the 'timestamp' field has been set, false otherwise.
+      */
+    public boolean hasTimestamp() {
+      return fieldSetFlags()[7];
+    }
+
+
+    /**
+      * Clears the value of the 'timestamp' field.
+      * @return This builder.
+      */
+    public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder clearTimestamp() {
+      timestamp = null;
+      fieldSetFlags()[7] = false;
+      return this;
+    }
+
+    /**
+      * Gets the value of the 'extract' field.
+      * @return The value.
+      */
+    public java.lang.String getExtract() {
+      return extract;
+    }
+
+
+    /**
+      * Sets the value of the 'extract' field.
+      * @param value The value of 'extract'.
+      * @return This builder.
+      */
+    public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder setExtract(java.lang.String value) {
+      validate(fields()[8], value);
+      this.extract = value;
+      fieldSetFlags()[8] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'extract' field has been set.
+      * @return True if the 'extract' field has been set, false otherwise.
+      */
+    public boolean hasExtract() {
+      return fieldSetFlags()[8];
+    }
+
+
+    /**
+      * Clears the value of the 'extract' field.
+      * @return This builder.
+      */
+    public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder clearExtract() {
+      extract = null;
+      fieldSetFlags()[8] = false;
+      return this;
+    }
+
+    /**
+      * Gets the value of the 'extractHtml' field.
+      * @return The value.
+      */
+    public java.lang.String getExtractHtml() {
+      return extractHtml;
+    }
+
+
+    /**
+      * Sets the value of the 'extractHtml' field.
+      * @param value The value of 'extractHtml'.
+      * @return This builder.
+      */
+    public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder setExtractHtml(java.lang.String value) {
+      validate(fields()[9], value);
+      this.extractHtml = value;
+      fieldSetFlags()[9] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'extractHtml' field has been set.
+      * @return True if the 'extractHtml' field has been set, false otherwise.
+      */
+    public boolean hasExtractHtml() {
+      return fieldSetFlags()[9];
+    }
+
+
+    /**
+      * Clears the value of the 'extractHtml' field.
+      * @return This builder.
+      */
+    public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder clearExtractHtml() {
+      extractHtml = null;
+      fieldSetFlags()[9] = false;
+      return this;
+    }
+
+    /**
+      * Gets the value of the 'normalizedTitle' field.
+      * @return The value.
+      */
+    public java.lang.String getNormalizedTitle() {
+      return normalizedTitle;
+    }
+
+
+    /**
+      * Sets the value of the 'normalizedTitle' field.
+      * @param value The value of 'normalizedTitle'.
+      * @return This builder.
+      */
+    public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder setNormalizedTitle(java.lang.String value) {
+      validate(fields()[10], value);
+      this.normalizedTitle = value;
+      fieldSetFlags()[10] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'normalizedTitle' field has been set.
+      * @return True if the 'normalizedTitle' field has been set, false otherwise.
+      */
+    public boolean hasNormalizedTitle() {
+      return fieldSetFlags()[10];
+    }
+
+
+    /**
+      * Clears the value of the 'normalizedTitle' field.
+      * @return This builder.
+      */
+    public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder clearNormalizedTitle() {
+      normalizedTitle = null;
+      fieldSetFlags()[10] = false;
+      return this;
+    }
+
+    /**
+      * Gets the value of the 'thumbnail' field.
+      * @return The value.
+      */
+    public java.lang.String getThumbnail() {
+      return thumbnail;
+    }
+
+
+    /**
+      * Sets the value of the 'thumbnail' field.
+      * @param value The value of 'thumbnail'.
+      * @return This builder.
+      */
+    public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder setThumbnail(java.lang.String value) {
+      validate(fields()[11], value);
+      this.thumbnail = value;
+      fieldSetFlags()[11] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'thumbnail' field has been set.
+      * @return True if the 'thumbnail' field has been set, false otherwise.
+      */
+    public boolean hasThumbnail() {
+      return fieldSetFlags()[11];
+    }
+
+
+    /**
+      * Clears the value of the 'thumbnail' field.
+      * @return This builder.
+      */
+    public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder clearThumbnail() {
+      thumbnail = null;
+      fieldSetFlags()[11] = false;
+      return this;
+    }
+
+    /**
+      * Gets the value of the 'originalImage' field.
+      * @return The value.
+      */
+    public java.lang.String getOriginalImage() {
+      return originalImage;
+    }
+
+
+    /**
+      * Sets the value of the 'originalImage' field.
+      * @param value The value of 'originalImage'.
+      * @return This builder.
+      */
+    public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder setOriginalImage(java.lang.String value) {
+      validate(fields()[12], value);
+      this.originalImage = value;
+      fieldSetFlags()[12] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'originalImage' field has been set.
+      * @return True if the 'originalImage' field has been set, false otherwise.
+      */
+    public boolean hasOriginalImage() {
+      return fieldSetFlags()[12];
+    }
+
+
+    /**
+      * Clears the value of the 'originalImage' field.
+      * @return This builder.
+      */
+    public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder clearOriginalImage() {
+      originalImage = null;
+      fieldSetFlags()[12] = false;
+      return this;
+    }
+
+    /**
+      * Gets the value of the 'pageUrl' field.
+      * @return The value.
+      */
+    public java.lang.String getPageUrl() {
+      return pageUrl;
+    }
+
+
+    /**
+      * Sets the value of the 'pageUrl' field.
+      * @param value The value of 'pageUrl'.
+      * @return This builder.
+      */
+    public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder setPageUrl(java.lang.String value) {
+      validate(fields()[13], value);
+      this.pageUrl = value;
+      fieldSetFlags()[13] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'pageUrl' field has been set.
+      * @return True if the 'pageUrl' field has been set, false otherwise.
+      */
+    public boolean hasPageUrl() {
+      return fieldSetFlags()[13];
+    }
+
+
+    /**
+      * Clears the value of the 'pageUrl' field.
+      * @return This builder.
+      */
+    public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder clearPageUrl() {
+      pageUrl = null;
+      fieldSetFlags()[13] = false;
+      return this;
+    }
 
     @Override
-    public void writeExternal(java.io.ObjectOutput out) throws java.io.IOException {
-        WRITER$.write(this, SpecificData.getEncoder(out));
+    public WikipediaPageAvroModel build() {
+      try {
+        WikipediaPageAvroModel record = new WikipediaPageAvroModel();
+        record.lang = fieldSetFlags()[0] ? this.lang : (java.lang.String) defaultValue(fields()[0]);
+        record.type = fieldSetFlags()[1] ? this.type : (java.lang.String) defaultValue(fields()[1]);
+        record.title = fieldSetFlags()[2] ? this.title : (java.lang.String) defaultValue(fields()[2]);
+        record.displayTitle = fieldSetFlags()[3] ? this.displayTitle : (java.lang.String) defaultValue(fields()[3]);
+        record.wikibaseItem = fieldSetFlags()[4] ? this.wikibaseItem : (java.lang.String) defaultValue(fields()[4]);
+        record.pageId = fieldSetFlags()[5] ? this.pageId : (java.lang.Long) defaultValue(fields()[5]);
+        record.tid = fieldSetFlags()[6] ? this.tid : (java.lang.String) defaultValue(fields()[6]);
+        record.timestamp = fieldSetFlags()[7] ? this.timestamp : (java.lang.String) defaultValue(fields()[7]);
+        record.extract = fieldSetFlags()[8] ? this.extract : (java.lang.String) defaultValue(fields()[8]);
+        record.extractHtml = fieldSetFlags()[9] ? this.extractHtml : (java.lang.String) defaultValue(fields()[9]);
+        record.normalizedTitle = fieldSetFlags()[10] ? this.normalizedTitle : (java.lang.String) defaultValue(fields()[10]);
+        record.thumbnail = fieldSetFlags()[11] ? this.thumbnail : (java.lang.String) defaultValue(fields()[11]);
+        record.originalImage = fieldSetFlags()[12] ? this.originalImage : (java.lang.String) defaultValue(fields()[12]);
+        record.pageUrl = fieldSetFlags()[13] ? this.pageUrl : (java.lang.String) defaultValue(fields()[13]);
+        return record;
+      } catch (org.apache.avro.AvroMissingFieldException e) {
+        throw e;
+      } catch (java.lang.Exception e) {
+        throw new org.apache.avro.AvroRuntimeException(e);
+      }
+    }
+  }
+
+  @SuppressWarnings("unchecked")
+  private static final org.apache.avro.io.DatumWriter<WikipediaPageAvroModel>
+    WRITER$ = (org.apache.avro.io.DatumWriter<WikipediaPageAvroModel>)MODEL$.createDatumWriter(SCHEMA$);
+
+  @Override public void writeExternal(java.io.ObjectOutput out)
+    throws java.io.IOException {
+    WRITER$.write(this, SpecificData.getEncoder(out));
+  }
+
+  @SuppressWarnings("unchecked")
+  private static final org.apache.avro.io.DatumReader<WikipediaPageAvroModel>
+    READER$ = (org.apache.avro.io.DatumReader<WikipediaPageAvroModel>)MODEL$.createDatumReader(SCHEMA$);
+
+  @Override public void readExternal(java.io.ObjectInput in)
+    throws java.io.IOException {
+    READER$.read(this, SpecificData.getDecoder(in));
+  }
+
+  @Override protected boolean hasCustomCoders() { return true; }
+
+  @Override public void customEncode(org.apache.avro.io.Encoder out)
+    throws java.io.IOException
+  {
+    out.writeString(this.lang);
+
+    out.writeString(this.type);
+
+    out.writeString(this.title);
+
+    out.writeString(this.displayTitle);
+
+    if (this.wikibaseItem == null) {
+      out.writeIndex(1);
+      out.writeNull();
+    } else {
+      out.writeIndex(0);
+      out.writeString(this.wikibaseItem);
     }
 
-    @SuppressWarnings("unchecked")
-    private static final org.apache.avro.io.DatumReader<WikipediaPageAvroModel> READER$ = (org.apache.avro.io.DatumReader<WikipediaPageAvroModel>) MODEL$
-            .createDatumReader(SCHEMA$);
+    out.writeLong(this.pageId);
 
-    @Override
-    public void readExternal(java.io.ObjectInput in) throws java.io.IOException {
-        READER$.read(this, SpecificData.getDecoder(in));
+    out.writeString(this.tid);
+
+    out.writeString(this.timestamp);
+
+    out.writeString(this.extract);
+
+    out.writeString(this.extractHtml);
+
+    out.writeString(this.normalizedTitle);
+
+    if (this.thumbnail == null) {
+      out.writeIndex(1);
+      out.writeNull();
+    } else {
+      out.writeIndex(0);
+      out.writeString(this.thumbnail);
     }
 
-    @Override
-    protected boolean hasCustomCoders() {
-        return true;
+    if (this.originalImage == null) {
+      out.writeIndex(1);
+      out.writeNull();
+    } else {
+      out.writeIndex(0);
+      out.writeString(this.originalImage);
     }
 
-    @Override
-    public void customEncode(org.apache.avro.io.Encoder out) throws java.io.IOException {
-        out.writeString(this.title);
+    out.writeString(this.pageUrl);
 
-        out.writeString(this.displayTitle);
+  }
 
-        out.writeString(this.wikibaseItem);
+  @Override public void customDecode(org.apache.avro.io.ResolvingDecoder in)
+    throws java.io.IOException
+  {
+    org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
+    if (fieldOrder == null) {
+      this.lang = in.readString();
 
-        out.writeString(this.pageId);
+      this.type = in.readString();
 
-        out.writeString(this.tid);
+      this.title = in.readString();
 
-        out.writeString(this.timestamp);
+      this.displayTitle = in.readString();
 
-        out.writeString(this.extract);
+      if (in.readIndex() != 0) {
+        in.readNull();
+        this.wikibaseItem = null;
+      } else {
+        this.wikibaseItem = in.readString();
+      }
 
-        out.writeString(this.normalizedTitle);
+      this.pageId = in.readLong();
 
-    }
+      this.tid = in.readString();
 
-    @Override
-    public void customDecode(org.apache.avro.io.ResolvingDecoder in) throws java.io.IOException {
-        org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
-        if (fieldOrder == null) {
-            this.title = in.readString(this.title instanceof Utf8 ? (Utf8) this.title : null);
+      this.timestamp = in.readString();
 
-            this.displayTitle = in.readString(this.displayTitle instanceof Utf8 ? (Utf8) this.displayTitle : null);
+      this.extract = in.readString();
 
-            this.wikibaseItem = in.readString(this.wikibaseItem instanceof Utf8 ? (Utf8) this.wikibaseItem : null);
+      this.extractHtml = in.readString();
 
-            this.pageId = in.readString(this.pageId instanceof Utf8 ? (Utf8) this.pageId : null);
+      this.normalizedTitle = in.readString();
 
-            this.tid = in.readString(this.tid instanceof Utf8 ? (Utf8) this.tid : null);
+      if (in.readIndex() != 0) {
+        in.readNull();
+        this.thumbnail = null;
+      } else {
+        this.thumbnail = in.readString();
+      }
 
-            this.timestamp = in.readString(this.timestamp instanceof Utf8 ? (Utf8) this.timestamp : null);
+      if (in.readIndex() != 0) {
+        in.readNull();
+        this.originalImage = null;
+      } else {
+        this.originalImage = in.readString();
+      }
 
-            this.extract = in.readString(this.extract instanceof Utf8 ? (Utf8) this.extract : null);
+      this.pageUrl = in.readString();
 
-            this.normalizedTitle = in
-                    .readString(this.normalizedTitle instanceof Utf8 ? (Utf8) this.normalizedTitle : null);
+    } else {
+      for (int i = 0; i < 14; i++) {
+        switch (fieldOrder[i].pos()) {
+        case 0:
+          this.lang = in.readString();
+          break;
 
-        } else {
-            for (int i = 0; i < 8; i++) {
-                switch (fieldOrder[i].pos()) {
-                case 0:
-                    this.title = in.readString(this.title instanceof Utf8 ? (Utf8) this.title : null);
-                    break;
+        case 1:
+          this.type = in.readString();
+          break;
 
-                case 1:
-                    this.displayTitle = in
-                            .readString(this.displayTitle instanceof Utf8 ? (Utf8) this.displayTitle : null);
-                    break;
+        case 2:
+          this.title = in.readString();
+          break;
 
-                case 2:
-                    this.wikibaseItem = in
-                            .readString(this.wikibaseItem instanceof Utf8 ? (Utf8) this.wikibaseItem : null);
-                    break;
+        case 3:
+          this.displayTitle = in.readString();
+          break;
 
-                case 3:
-                    this.pageId = in.readString(this.pageId instanceof Utf8 ? (Utf8) this.pageId : null);
-                    break;
+        case 4:
+          if (in.readIndex() != 0) {
+            in.readNull();
+            this.wikibaseItem = null;
+          } else {
+            this.wikibaseItem = in.readString();
+          }
+          break;
 
-                case 4:
-                    this.tid = in.readString(this.tid instanceof Utf8 ? (Utf8) this.tid : null);
-                    break;
+        case 5:
+          this.pageId = in.readLong();
+          break;
 
-                case 5:
-                    this.timestamp = in.readString(this.timestamp instanceof Utf8 ? (Utf8) this.timestamp : null);
-                    break;
+        case 6:
+          this.tid = in.readString();
+          break;
 
-                case 6:
-                    this.extract = in.readString(this.extract instanceof Utf8 ? (Utf8) this.extract : null);
-                    break;
+        case 7:
+          this.timestamp = in.readString();
+          break;
 
-                case 7:
-                    this.normalizedTitle = in
-                            .readString(this.normalizedTitle instanceof Utf8 ? (Utf8) this.normalizedTitle : null);
-                    break;
+        case 8:
+          this.extract = in.readString();
+          break;
 
-                default:
-                    throw new java.io.IOException("Corrupt ResolvingDecoder.");
-                }
-            }
+        case 9:
+          this.extractHtml = in.readString();
+          break;
+
+        case 10:
+          this.normalizedTitle = in.readString();
+          break;
+
+        case 11:
+          if (in.readIndex() != 0) {
+            in.readNull();
+            this.thumbnail = null;
+          } else {
+            this.thumbnail = in.readString();
+          }
+          break;
+
+        case 12:
+          if (in.readIndex() != 0) {
+            in.readNull();
+            this.originalImage = null;
+          } else {
+            this.originalImage = in.readString();
+          }
+          break;
+
+        case 13:
+          this.pageUrl = in.readString();
+          break;
+
+        default:
+          throw new java.io.IOException("Corrupt ResolvingDecoder.");
         }
+      }
     }
+  }
 }
+
+
+
+
+
+
+
+
+
+

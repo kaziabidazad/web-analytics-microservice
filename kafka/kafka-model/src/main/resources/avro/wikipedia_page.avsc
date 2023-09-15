@@ -4,6 +4,14 @@
     "name": "WikipediaPageAvroModel",
     "fields": [
         {
+            "name": "lang",
+            "type": "string"
+        },
+        {
+            "name": "type",
+            "type": "string"
+        },
+        {
             "name": "title",
             "type": "string"
         },
@@ -13,11 +21,14 @@
         },
         {
             "name": "wikibaseItem",
-            "type": "string"
+            "type": [
+                "string",
+                "null"
+            ]
         },
         {
             "name": "pageId",
-            "type": "string"
+            "type": "long"
         },
         {
             "name": "tid",
@@ -32,7 +43,29 @@
             "type": "string"
         },
         {
+            "name": "extractHtml",
+            "type": "string"
+        },
+        {
             "name": "normalizedTitle",
+            "type": "string"
+        },
+        {
+            "name": "thumbnail",
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        {
+            "name": "originalImage",
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        {
+            "name": "pageUrl",
             "type": "string"
         }
     ]
