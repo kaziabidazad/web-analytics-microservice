@@ -1,0 +1,108 @@
+version: '3'
+services:
+  solr1:
+    image: solr:9.3.0
+    hostname: solr1
+    user: root
+    ports:
+      - "18983:8983"
+    volumes:
+      - "../../data/solr1:/var/solr"
+    environment:
+      ZK_HOST: solr-zoo1:2181,solr-zoo2:2181,solr-zoo3:2181
+      SOLR_LOG_LEVEL: INFO
+    depends_on:
+      - solr-zoo1
+      - solr-zoo2
+      - solr-zoo3
+    command: bash -c "chown -R 18983:8983 /var/solr &&  runuser -u solr -- /opt/solr/docker/scripts/docker-entrypoint.sh -q"
+    networks: 
+      - wams
+  solr2:
+    image: solr:9.3.0
+    hostname: solr2
+    user: root
+    ports:
+      - "28983:8983"
+    volumes:
+      - "../../data/solr2:/var/solr"
+    environment:
+      ZK_HOST: solr-zoo1:2181,solr-zoo2:2181,solr-zoo3:2181
+      SOLR_LOG_LEVEL: INFO
+    depends_on:
+      - solr-zoo1
+      - solr-zoo2
+      - solr-zoo3
+    command: bash -c "chown -R 18983:8983 /var/solr &&  runuser -u solr -- /opt/solr/docker/scripts/docker-entrypoint.sh -q"
+    networks: 
+      - wams
+  solr3:
+    image: solr:9.3.0
+    hostname: solr3
+    user: root
+    ports:
+      - "38983:8983"
+    volumes:
+      - "../../data/solr3:/var/solr"
+    environment:
+      ZK_HOST: solr-zoo1:2181,solr-zoo2:2181,solr-zoo3:2181
+      SOLR_LOG_LEVEL: INFO
+    depends_on:
+      - solr-zoo1
+      - solr-zoo2
+      - solr-zoo3
+    command: bash -c "chown -R 18983:8983 /var/solr &&  runuser -u solr -- /opt/solr/docker/scripts/docker-entrypoint.sh -q"
+    networks: 
+      - wams
+  solr-zoo1:
+    image: zookeeper:3.9.0
+    restart: always
+    hostname: solr-zoo1
+    user: root
+    ports:
+      - "12181:2181"
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_SERVERS: server.1=solr-zoo1:2888:3888;2181 server.2=solr-zoo2:2888:3888;2181 server.3=solr-zoo3:2888:3888;2181
+      ZOO_4LW_COMMANDS_WHITELIST: mntr,conf,ruok,stat,isro
+    volumes:
+      - "../../data/solr-zoo1:/data"
+    networks: 
+      - wams
+  solr-zoo2:
+    image: zookeeper:3.9.0
+    restart: always
+    hostname: solr-zoo2
+    user: root
+    ports:
+      - "22181:2181"
+    environment:
+      ZOO_MY_ID: 2
+      ZOO_SERVERS: server.1=solr-zoo1:2888:3888;2181 server.2=solr-zoo2:2888:3888;2181 server.3=solr-zoo3:2888:3888;2181
+      ZOO_4LW_COMMANDS_WHITELIST: mntr,conf,ruok,stat,isro
+    volumes:
+      - "../../data/solr-zoo2:/data"
+    networks: 
+      - wams
+  solr-zoo3:
+    image: zookeeper:3.9.0
+    restart: always
+    hostname: solr-zoo3
+    user: root
+    ports:
+      - "32181:2181"
+    environment:
+      ZOO_MY_ID: 3
+      ZOO_SERVERS: server.1=solr-zoo1:2888:3888;2181 server.2=solr-zoo2:2888:3888;2181 server.3=solr-zoo3:2888:3888;2181
+      ZOO_4LW_COMMANDS_WHITELIST: mntr,conf,ruok,stat,isro
+    volumes:
+      - "../../data/solr-zoo3:/data"
+    networks: 
+      - wams
+volumes:
+  data:
+
+networks:
+  wams:
+    name: wams
+    external: true

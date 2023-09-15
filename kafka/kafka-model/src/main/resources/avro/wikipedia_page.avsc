@@ -1,0 +1,72 @@
+{
+    "namespace": "com.kaziabid.learn.wams.kafka.model.avro",
+    "type": "record",
+    "name": "WikipediaPageAvroModel",
+    "fields": [
+        {
+            "name": "lang",
+            "type": "string"
+        },
+        {
+            "name": "type",
+            "type": "string"
+        },
+        {
+            "name": "title",
+            "type": "string"
+        },
+        {
+            "name": "displayTitle",
+            "type": "string"
+        },
+        {
+            "name": "wikibaseItem",
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        {
+            "name": "pageId",
+            "type": "long"
+        },
+        {
+            "name": "tid",
+            "type": "string"
+        },
+        {
+            "name": "timestamp",
+            "type": "string"
+        },
+        {
+            "name": "extract",
+            "type": "string"
+        },
+        {
+            "name": "extractHtml",
+            "type": "string"
+        },
+        {
+            "name": "normalizedTitle",
+            "type": "string"
+        },
+        {
+            "name": "thumbnail",
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        {
+            "name": "originalImage",
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        {
+            "name": "pageUrl",
+            "type": "string"
+        }
+    ]
+}

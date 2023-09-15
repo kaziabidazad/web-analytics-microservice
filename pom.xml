@@ -1,0 +1,131 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.1.2</version>
+    </parent>
+
+    <groupId>com.kaziabid.learn.wams</groupId>
+    <artifactId>web-analytics-microservice</artifactId>
+    <version>0.0.1</version>
+    <packaging>pom</packaging>
+    <name>wev-analytics-microservice</name>
+    <description>Base Project for the Wikipedia/Twitter Analytics Micro Service
+        Application.</description>
+
+    <properties>
+        <spring-data-solr-version>4.3.15</spring-data-solr-version>
+        <maven.compiler.release>17</maven.compiler.release>
+        <spring-cloud-starter-config-version>4.0.4</spring-cloud-starter-config-version>
+        <kafka-avro-serializer-version>7.4.0</kafka-avro-serializer-version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
+
+        <!--
+        https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-config</artifactId>
+                <version>${spring-cloud-starter-config-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.confluent</groupId>
+                <artifactId>kafka-avro-serializer</artifactId>
+                <version>${kafka-avro-serializer-version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-log4j12</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>io.swagger</groupId>
+                        <artifactId>swagger-annotations</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>io.swagger</groupId>
+                        <artifactId>swagger-core</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.solr</groupId>
+                <artifactId>solr-solrj</artifactId>
+                <version>9.3.0</version>
+            </dependency>
+            <!--
+            https://mvnrepository.com/artifact/org.apache.solr/solr-solrj-zookeeper -->
+            <dependency>
+                <groupId>org.apache.solr</groupId>
+                <artifactId>solr-solrj-zookeeper</artifactId>
+                <version>9.3.0</version>
+            </dependency>
+
+        </dependencies>
+
+    </dependencyManagement>
+
+
+    <modules>
+        <module>twitter-to-kafka-servcie</module>
+        <module>wikipedia-to-kafka-service</module>
+        <module>kafka</module>
+        <module>common-config</module>
+        <module>config-server</module>
+        <module>kafka-to-elastic-service</module>
+        <module>kafka-to-solr-service</module>
+        <module>common-dto</module>
+    </modules>
+
+
+    <repositories>
+        <repository>
+            <id>confluent</id>
+            <name>Confluent Repo</name>
+            <url>https://packages.confluent.io/maven/</url>
+        </repository>
+    </repositories>
+</project>

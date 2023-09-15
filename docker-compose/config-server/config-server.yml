@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+  config-server:
+    hostname: config-server
+    image: wams/config-server:${SERVICE_VERSION:-latest}
+    user: root
+    entrypoint: ["check-kafka-schema-registry-started.sh"]
+    ports:
+      - "5006:5006"
+      - "8888:8888"
+    volumes:
+      - "../docker-logs:/workspaces/config-server/logs"
+      - "./check-kafka-schema-registry-started.sh:/usr/local/bin/check-kafka-schema-registry-started.sh"
+    environment:
+      - "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5006 -Xms128m -Xmx1024m"
+    networks: 
+      - wams
+    
+networks:
+  wams:
+    external: true
