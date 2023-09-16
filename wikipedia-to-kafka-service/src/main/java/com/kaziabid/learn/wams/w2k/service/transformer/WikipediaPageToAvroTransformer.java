@@ -4,8 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kaziabid.learn.wams.common.dto.wiki.WikiFullPage;
 import com.kaziabid.learn.wams.common.dto.wiki.WikiPage;
 import com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel;
 
@@ -14,9 +14,11 @@ import com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel;
  */
 @Component
 public class WikipediaPageToAvroTransformer {
+    @SuppressWarnings("unused")
     private static final Logger LOGGER = LoggerFactory
             .getLogger(WikipediaPageToAvroTransformer.class);
 
+    @SuppressWarnings("unused")
     private ObjectMapper objectMapper;
 
     public WikipediaPageToAvroTransformer() {
@@ -25,18 +27,9 @@ public class WikipediaPageToAvroTransformer {
     }
 
     public WikipediaPageAvroModel getWikipediaPageAvroModelFromPage(
-            WikiPage wikiPage) {
-        if (wikiPage.thumbnail() == null) {
-            try {
-                LOGGER.error("##### Empty thumbnail:  {}"
-                        + objectMapper.writerWithDefaultPrettyPrinter()
-                                .writeValueAsString(wikiPage));
-            } catch (JsonProcessingException e) {
-                LOGGER.error(
-                        "#### Empty thumnail(Error pretty printing ) : {} ",
-                        wikiPage, e);
-            }
-        }
+            WikiFullPage wikiFullPage) {
+        String fullHtmlTextString = wikiFullPage.fullPage();
+        WikiPage wikiPage = wikiFullPage.wikiPage();
         WikipediaPageAvroModel wikipediaPageAvroModel = WikipediaPageAvroModel
                 .newBuilder()
                 .setTid(wikiPage.tid())
@@ -53,6 +46,7 @@ public class WikipediaPageToAvroTransformer {
                 .setPageUrl(wikiPage.pageUrl())
                 .setThumbnail(wikiPage.thumbnail())
                 .setOriginalImage(wikiPage.originalImage())
+                .setFullPage(fullHtmlTextString)
                 .build();
         return wikipediaPageAvroModel;
     }

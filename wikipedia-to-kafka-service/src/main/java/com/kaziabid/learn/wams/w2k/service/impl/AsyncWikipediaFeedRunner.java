@@ -23,7 +23,8 @@ import com.kaziabid.learn.wams.w2k.service.WikipediaFeedRunner;
 @Component
 public class AsyncWikipediaFeedRunner implements WikipediaFeedRunner, Runnable {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(AsyncWikipediaFeedRunner.class);
+    private final static Logger LOGGER = LoggerFactory
+            .getLogger(AsyncWikipediaFeedRunner.class);
     private WikipediaDataExtractor wikipediaDataExtractor;
     private Thread worker;
     private AtomicBoolean running = new AtomicBoolean(true);
@@ -38,7 +39,9 @@ public class AsyncWikipediaFeedRunner implements WikipediaFeedRunner, Runnable {
      * @param wikipediaDataExtractor
      * @param taskExecutor
      */
-    public AsyncWikipediaFeedRunner(WikipediaDataExtractor wikipediaDataExtractor, ExecutorService taskExecutor,
+    public AsyncWikipediaFeedRunner(
+            WikipediaDataExtractor wikipediaDataExtractor,
+            ExecutorService taskExecutor,
             AdminClient adminClient) {
         super();
         this.wikipediaDataExtractor = wikipediaDataExtractor;
@@ -94,10 +97,11 @@ public class AsyncWikipediaFeedRunner implements WikipediaFeedRunner, Runnable {
             LocalDate currentDate = LocalDate.now();
             try {
                 if (queryDate.isBefore(currentDate)) {
-                    LOGGER.debug("Executing Wikipedia feed");
-                    wikipediaDataExtractor.extractWikipediaPagePerDay(queryDate);
+                    LOGGER.debug("Executing Wikipedia feed for {}", queryDate);
+                    wikipediaDataExtractor
+                            .extractWikipediaPagePerDay(queryDate);
                     queryDate = queryDate.plusDays(1);
-                    Thread.sleep(2000);
+                    Thread.sleep(200);
                 } else {
                     Thread.sleep(60 * 60 * 1000);// sleep for 1 hour
                 }

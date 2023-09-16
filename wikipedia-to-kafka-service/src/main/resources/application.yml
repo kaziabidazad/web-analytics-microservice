@@ -15,3 +15,74 @@ spring:
        multiplier: 1.5
        max-attempts: 1000
        max-interval: 30000
+       
+
+
+
+#For Local Testing without the config server:
+
+#spring:
+#  cloud:
+#    config:
+#      enabled: false
+#
+#retry-config:
+#  initial-interval-ms: 3000
+#  max-interval-ms: 100000
+#  multiplier: 2.0
+#  maxAttempts: 10
+#  sleep-time-ms: 2000
+#
+#wikipedia-config:
+#  wikipediadateformat: yyyy/MM/dd
+#  wikipedia-featured-feed-url: https://en.wikipedia.org/api/rest_v1/feed/featured
+#  wikipedia-page-html-api:
+#    base-url:  https://en.wikipedia.org/api/rest_v1/page/html
+#    url-params:
+#      - name: redirect
+#        value: false
+#  
+#kafka-config.wikipedia:
+#  bootstrap-servers: localhost:29092, localhost:29093, localhost:29094
+#  schema-registry-url-key: schema.registry.url
+#  schema-registry-url:  http://localhost:8081
+#  topic-name: wikipedia.pages
+#  topic-names-to-create:
+#    - wikipedia.pages
+#  number-of-partitions: 3
+#  replication-factor: 3
+#  topic-max-message-bytes: 5242880
+#  
+#kafka-producer-config.wikipedia:
+#  key-serializer-class: org.apache.kafka.common.serialization.LongSerializer
+#  value-serializer-class: io.confluent.kafka.serializers.KafkaAvroSerializer
+#  compression-type: snappy
+#  acks: all
+#  # Batch size in bytes 20971520= 20MB
+#  # To override change broker settings : replica.fetch.max.bytes, message.max.bytes
+#  batch-size: 20971520
+#  batch-size-boost-factor: 100
+#  # max request size in bytes 5242880= 5MB 
+#  # To overrise change broker settings : replica.fetch.max.bytes, message.max.bytes message.max.bytes
+#  max-request-size: 5242880
+#  linger-ms: 5
+#  request-timeout-ms: 60000
+#  retry-count: 5
+#  start-date: 2016-01-01
+#
+#management:
+#  server:
+#    port: 8181
+#  endpoints:
+#    enable-by-default: true
+#    web:
+#      exposure:
+#        include: "*"
+##        exclude: "env,beans"
+##      base-path: /manage
+#  endpoint:
+#    shutdown:
+#      enabled: true
+##    info:
+##      enabled: true
+  

@@ -1,6 +1,7 @@
 package com.kaziabid.learn.wams.w2k.component;
 
 import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -29,8 +30,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kaziabid.learn.wams.common.dto.wiki.MostRead;
 import com.kaziabid.learn.wams.common.dto.wiki.OnThisDay;
 import com.kaziabid.learn.wams.common.dto.wiki.WikiFeedResult;
+import com.kaziabid.learn.wams.common.dto.wiki.WikiFullPage;
 import com.kaziabid.learn.wams.common.dto.wiki.WikiPage;
 import com.kaziabid.learn.wams.commonconfig.data.KafkaWikipediaConfigData;
+import com.kaziabid.learn.wams.commonconfig.data.UrlParam;
 import com.kaziabid.learn.wams.commonconfig.data.WikipediaConfigData;
 import com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel;
 import com.kaziabid.learn.wams.kafka.producer.service.KafkaProducer;
@@ -96,7 +99,7 @@ public class WikipediaDataExtractor {
                             return feedResult;
                         }
                     });
-            LOGGER.info("Wiki Feed: {}", feedResult);
+//            LOGGER.info("Wiki Feed: {}", feedResult);
             pushFeedresultToKafka(feedResult);
         } catch (URISyntaxException e) {
             LOGGER.error("Error building URI: ", e);
@@ -119,29 +122,89 @@ public class WikipediaDataExtractor {
     private List<WikipediaPageAvroModel> extractWikiPagesFromFeedResult(
             WikiFeedResult feedResult) {
         List<WikipediaPageAvroModel> wikiPages = new ArrayList<>();
+        List<WikiPage> allPages = new ArrayList<>();
         WikiPage tfa = feedResult.todaysFetauredArticle();
-        wikiPages.add(avroTransformer.getWikipediaPageAvroModelFromPage(tfa));
+        allPages.add(tfa);
+
         MostRead mostRead = feedResult.mostRead();
         if (mostRead != null)
             if (mostRead.articles() != null)
-                wikiPages.addAll(mostRead.articles().stream()
-                        .map(wikipage -> avroTransformer
-                                .getWikipediaPageAvroModelFromPage(wikipage))
-                        .collect(Collectors.toList()));
+                allPages.addAll(mostRead.articles());
         List<OnThisDay> onthisDayArticles = feedResult.onThisDayArticles();
         if (onthisDayArticles != null) {
             onthisDayArticles.forEach(article -> {
                 List<WikiPage> articlePages = article.pages();
-                if (articlePages != null) {
-                    wikiPages.addAll(articlePages.stream()
-                            .map(wikipage -> avroTransformer
-                                    .getWikipediaPageAvroModelFromPage(
-                                            wikipage))
-                            .collect(Collectors.toList()));
-                }
+                if (articlePages != null)
+                    allPages.addAll(articlePages);
             });
         }
+
+        wikiPages
+                .addAll(allPages.stream().filter(p -> p != null)
+                        .map(wikipage -> {
+                            String pageTitle = wikipage.title();
+                            // Extract Full page
+                            String fullHtmlContent = extractFullHtmlWikiContent(
+                                    pageTitle);
+                            WikiFullPage wikiFullPage = new WikiFullPage(
+                                    wikipage, fullHtmlContent);
+                            WikipediaPageAvroModel wikipediaPageAvroModelFromPage = avroTransformer
+                                    .getWikipediaPageAvroModelFromPage(
+                                            wikiFullPage);
+                            return wikipediaPageAvroModelFromPage;
+                        })
+                        .collect(Collectors.toList()));
+    
         return wikiPages;
+    }
+
+    private String extractFullHtmlWikiContent(String pageTitle) {
+        String fullPageHtml = null;
+        List<UrlParam> params = wikipediaConfigData.wikipediaPageHtmlApi()
+                .urlParams();
+        if (params == null) {
+            LOGGER.warn(
+                    "Url params config is not found.. Cannot extract full page content..");
+            return null;
+        }
+        final URIBuilder uriBuilder;
+        try {
+            uriBuilder = new URIBuilder(
+                    wikipediaConfigData.wikipediaPageHtmlApi().baseUrl());
+        } catch (URISyntaxException e) {
+            LOGGER.error(
+                    "Error building uri from {}  Cannot extract full page content..: ",
+                    wikipediaConfigData.wikipediaPageHtmlApi().baseUrl(), e);
+            return null;
+        }
+        uriBuilder
+                .appendPath(pageTitle);
+        params.stream().forEach(p -> {
+            uriBuilder.addParameter(p.name(), p.value());
+        });
+        try {
+            URI wikipediaFullPageUri = uriBuilder.build();
+            HttpGet getRequest = new HttpGet(wikipediaFullPageUri);
+            HttpClient httpClient = HttpClientBuilder.create().build();
+            fullPageHtml = httpClient.execute(getRequest,
+                    new HttpClientResponseHandler<String>() {
+                        @Override
+                        public String handleResponse(
+                                ClassicHttpResponse response)
+                                throws HttpException, IOException {
+                            String data = new String(response.getEntity()
+                                    .getContent().readAllBytes());
+//                LOGGER.info("Data: {} ",
+//                        objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(feedResult));
+                            return data;
+                        }
+                    });
+        } catch (URISyntaxException | IOException e) {
+            LOGGER.error(
+                    "Error calling wiki page api:  Cannot extract full page content.. ",
+                    e);
+        }
+        return fullPageHtml;
     }
 
 }

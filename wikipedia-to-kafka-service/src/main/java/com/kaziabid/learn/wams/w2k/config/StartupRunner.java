@@ -1,7 +1,6 @@
 package com.kaziabid.learn.wams.w2k.config;
 
 import java.time.LocalDate;
-import java.util.Scanner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,22 +68,22 @@ public class StartupRunner implements ApplicationRunner {
         LOGGER.info("Wikipedia Extraction start date: {} ", kafkaWikipediaProducerConfigData.startDate());
         LocalDate startDate = kafkaWikipediaProducerConfigData.startDate();
         wikipediaFeedRunner.start(startDate);
-        String message = """
-
-                *****************************************************************************
-                *****************************************************************************
-                ******                                                                 ******
-                ******                                                                 ******
-                ******                     Press Enter to Stop                         ******
-                ******                                                                 ******
-                ******                                                                 ******
-                *****************************************************************************
-                *****************************************************************************
-                """;
-        LOGGER.error(message);
-        try (Scanner scanner = new Scanner(System.in)) {
-            scanner.nextLine();
-            wikipediaFeedRunner.stop();
-        }
+//        String message = """
+//
+//                *****************************************************************************
+//                *****************************************************************************
+//                ******                                                                 ******
+//                ******                                                                 ******
+//                ******                     Press Enter to Stop                         ******
+//                ******                                                                 ******
+//                ******                                                                 ******
+//                *****************************************************************************
+//                *****************************************************************************
+//                """;
+//        LOGGER.error(message);
+//        try (Scanner scanner = new Scanner(System.in)) {
+//            scanner.nextLine();
+//            wikipediaFeedRunner.stop();
+//        }
     }
 }
