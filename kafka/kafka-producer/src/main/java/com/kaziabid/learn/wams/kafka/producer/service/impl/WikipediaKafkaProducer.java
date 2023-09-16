@@ -16,25 +16,31 @@ import com.kaziabid.learn.wams.kafka.producer.service.KafkaProducer;
 import jakarta.annotation.PreDestroy;
 
 @Service
-public class WikipediaKafkaProducer implements KafkaProducer<Long, WikipediaPageAvroModel> {
+public class WikipediaKafkaProducer
+        implements
+            KafkaProducer<Long, WikipediaPageAvroModel> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(WikipediaKafkaProducer.class);
+    private static final Logger LOGGER = LoggerFactory
+            .getLogger(WikipediaKafkaProducer.class);
 
     private KafkaTemplate<Long, WikipediaPageAvroModel> kafkaTemplate;
 
     /**
      * @param kafkaTemplate
      */
-    public WikipediaKafkaProducer(KafkaTemplate<Long, WikipediaPageAvroModel> kafkaTemplate) {
+    public WikipediaKafkaProducer(
+            KafkaTemplate<Long, WikipediaPageAvroModel> kafkaTemplate) {
         super();
         this.kafkaTemplate = kafkaTemplate;
     }
 
     @Override
-    public void send(String topicName, Long key, WikipediaPageAvroModel message) {
-        LOGGER.info("Send message {} to topic = {}", message, topicName);
-        CompletableFuture<SendResult<Long, WikipediaPageAvroModel>> future = kafkaTemplate.send(topicName, key,
-                message);
+    public void send(String topicName, Long key,
+            WikipediaPageAvroModel message) {
+        LOGGER.info("Send message to topic = {}", topicName);
+        CompletableFuture<SendResult<Long, WikipediaPageAvroModel>> future = kafkaTemplate
+                .send(topicName, key,
+                        message);
         try {
             SendResult<Long, WikipediaPageAvroModel> result = future.get();
             if (result != null) {
@@ -53,7 +59,8 @@ public class WikipediaKafkaProducer implements KafkaProducer<Long, WikipediaPage
 
                         System.nanoTime());
             } else {
-                LOGGER.error("Error sending Message = {}  to Topic = {}.", message.toString(), topicName);
+                LOGGER.error("Error sending Message  to Topic = {}.",
+                        topicName);
             }
         } catch (InterruptedException | ExecutionException e) {
             LOGGER.error("Error sending data to topic.", e);
@@ -63,8 +70,9 @@ public class WikipediaKafkaProducer implements KafkaProducer<Long, WikipediaPage
 
     @Override
     public void send(String topicName, WikipediaPageAvroModel message) {
-        LOGGER.info("Send message {} to topic = {}", message, topicName);
-        CompletableFuture<SendResult<Long, WikipediaPageAvroModel>> future = kafkaTemplate.send(topicName, message);
+        LOGGER.info("Send message to topic = {}", topicName);
+        CompletableFuture<SendResult<Long, WikipediaPageAvroModel>> future = kafkaTemplate
+                .send(topicName, message);
         try {
             SendResult<Long, WikipediaPageAvroModel> result = future.get();
             if (result != null) {
@@ -83,7 +91,7 @@ public class WikipediaKafkaProducer implements KafkaProducer<Long, WikipediaPage
 
                         System.nanoTime());
             } else {
-                LOGGER.error("Error sending Message = {}  to Topic = {}.", message.toString(), topicName);
+                LOGGER.error("Error sending Message to Topic = {}.", topicName);
             }
         } catch (InterruptedException | ExecutionException e) {
             LOGGER.error("Error sending data to topic.", e);

@@ -1,7 +1,9 @@
 package com.kaziabid.learn.wams.kafkaadmin.clients;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
@@ -9,6 +11,7 @@ import org.apache.kafka.clients.admin.AdminClient;
 import org.apache.kafka.clients.admin.CreateTopicsResult;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.admin.TopicListing;
+import org.apache.kafka.common.config.TopicConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpMethod;
@@ -30,7 +33,8 @@ import reactor.core.publisher.Mono;
 @Component
 public class KafkaWikipediaAdminClient {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(KafkaWikipediaAdminClient.class);
+    private static final Logger LOGGER = LoggerFactory
+            .getLogger(KafkaWikipediaAdminClient.class);
 
     private final KafkaWikipediaConfigData kafkaWikipediaConfigData;
 
@@ -48,8 +52,11 @@ public class KafkaWikipediaAdminClient {
      * @param adminClient
      * @param retryTemplate
      */
-    public KafkaWikipediaAdminClient(KafkaWikipediaConfigData kafkaWikipediaConfigData, RetryConfigData retryConfigData,
-            AdminClient adminClient, RetryTemplate retryTemplate, WebClient webClient) {
+    public KafkaWikipediaAdminClient(
+            KafkaWikipediaConfigData kafkaWikipediaConfigData,
+            RetryConfigData retryConfigData,
+            AdminClient adminClient, RetryTemplate retryTemplate,
+            WebClient webClient) {
         super();
         this.kafkaWikipediaConfigData = kafkaWikipediaConfigData;
         this.retryConfigData = retryConfigData;
@@ -62,7 +69,9 @@ public class KafkaWikipediaAdminClient {
         try {
             retryTemplate.execute(this::doCreateTopics);
         } catch (Throwable t) {
-            throw new KafkaClientException("Reached maximum number of retries for creating kafka topics(s)!", t);
+            throw new KafkaClientException(
+                    "Reached maximum number of retries for creating kafka topics(s)!",
+                    t);
         }
         checkTopicsCreated();
     }
@@ -123,7 +132,8 @@ public class KafkaWikipediaAdminClient {
         try {
             Thread.sleep(sleepTime);
         } catch (InterruptedException e) {
-            throw new KafkaClientException("Error while sleeping for waiting for new craeted topics.");
+            throw new KafkaClientException(
+                    "Error while sleeping for waiting for new craeted topics.");
         }
 
     }
@@ -134,7 +144,8 @@ public class KafkaWikipediaAdminClient {
      * @param maxRetry
      * @throws KafkaClientException
      */
-    private void checkMaxRetry(int retryCount, Integer maxRetry) throws KafkaClientException {
+    private void checkMaxRetry(int retryCount, Integer maxRetry)
+            throws KafkaClientException {
         if (retryCount > maxRetry)
             throw new KafkaClientException("Exceeded the max retry limit.");
     }
@@ -145,7 +156,8 @@ public class KafkaWikipediaAdminClient {
      * @param topicName - The topic name to check
      * @return
      */
-    private boolean isTopicCreated(Collection<TopicListing> topics, String topicName) {
+    private boolean isTopicCreated(Collection<TopicListing> topics,
+            String topicName) {
         if (topics == null || topics.isEmpty())
             return false;
         return topics.stream().anyMatch(t -> t.name().equals(topicName));
@@ -153,11 +165,17 @@ public class KafkaWikipediaAdminClient {
 
     private CreateTopicsResult doCreateTopics(RetryContext retryContext) {
         List<String> topicNames = kafkaWikipediaConfigData.topicNamesToCreate();
-        LOGGER.info("Creating {} topic(s): {} , attempt {} ", topicNames.size(), topicNames,
+        LOGGER.info("Creating {} topic(s): {} , attempt {} ", topicNames.size(),
+                topicNames,
                 retryContext.getRetryCount());
+        Map<String, String> topicConfigs = new HashMap<>();
+        topicConfigs.put(TopicConfig.MAX_MESSAGE_BYTES_CONFIG,
+                kafkaWikipediaConfigData.topicMaxMessageBytes().toString());
         List<NewTopic> kafkaTopics = topicNames.stream().map(t -> {
-            NewTopic newTopic = new NewTopic(t.trim(), kafkaWikipediaConfigData.numberOfpartitions(),
-                    kafkaWikipediaConfigData.replicationFactor());
+            NewTopic newTopic = new NewTopic(t.trim(),
+                    kafkaWikipediaConfigData.numberOfpartitions(),
+                    kafkaWikipediaConfigData.replicationFactor())
+                    .configs(topicConfigs);
             return newTopic;
         }).collect(Collectors.toList());
         return adminClient.createTopics(kafkaTopics);
@@ -168,18 +186,23 @@ public class KafkaWikipediaAdminClient {
         try {
             topics = retryTemplate.execute(this::doGetTopics);
         } catch (Throwable t) {
-            throw new KafkaClientException("Reached maximum number of retries for reading kafka topics(s)!", t);
+            throw new KafkaClientException(
+                    "Reached maximum number of retries for reading kafka topics(s)!",
+                    t);
         }
         return topics;
     }
 
     private Collection<TopicListing> doGetTopics(RetryContext retryContext)
             throws InterruptedException, ExecutionException {
-        LOGGER.info("Reading Kafka Topic{}, attempt: {}", kafkaWikipediaConfigData.topicNamesToCreate(),
+        LOGGER.info("Reading Kafka Topic{}, attempt: {}",
+                kafkaWikipediaConfigData.topicNamesToCreate(),
                 retryContext.getRetryCount());
-        Collection<TopicListing> topics = adminClient.listTopics().listings().get();
+        Collection<TopicListing> topics = adminClient.listTopics().listings()
+                .get();
         if (topics != null)
-            topics.forEach(topic -> LOGGER.info("Topic with name {}", topic.name()));
+            topics.forEach(
+                    topic -> LOGGER.info("Topic with name {}", topic.name()));
         return topics;
 
     }

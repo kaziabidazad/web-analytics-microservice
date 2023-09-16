@@ -27,13 +27,15 @@ public class KafkaProducerCofig<K extends Serializable, V extends SpecificRecord
 
     private final KafkaWikipediaConfigData kafkaWikipediaConfigData;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(KafkaProducerCofig.class);
+    private static final Logger LOGGER = LoggerFactory
+            .getLogger(KafkaProducerCofig.class);
 
     /**
      * @param kafkaWikipediaProducerConfigData
      * @param kafkaWikipediaConfigData
      */
-    public KafkaProducerCofig(KafkaWikipediaProducerConfigData kafkaWikipediaProducerConfigData,
+    public KafkaProducerCofig(
+            KafkaWikipediaProducerConfigData kafkaWikipediaProducerConfigData,
             KafkaWikipediaConfigData kafkaWikipediaConfigData) {
         super();
         this.kafkaWikipediaProducerConfigData = kafkaWikipediaProducerConfigData;
@@ -43,17 +45,28 @@ public class KafkaProducerCofig<K extends Serializable, V extends SpecificRecord
     @Bean
     public Map<String, Object> producerConfig() {
         Map<String, Object> properties = new HashMap<>();
-        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaWikipediaConfigData.bootstrapServers());
-        properties.put(kafkaWikipediaConfigData.schemaRegistryUrlKey(), kafkaWikipediaConfigData.schemaRegistryUrl());
+        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
+                kafkaWikipediaConfigData.bootstrapServers());
+        properties.put(kafkaWikipediaConfigData.schemaRegistryUrlKey(),
+                kafkaWikipediaConfigData.schemaRegistryUrl());
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
                 kafkaWikipediaProducerConfigData.keySerializerClass());
         properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
                 kafkaWikipediaProducerConfigData.valueSerializerClass());
-        properties.put(ProducerConfig.LINGER_MS_CONFIG, kafkaWikipediaProducerConfigData.lingerMs());
-        properties.put(ProducerConfig.COMPRESSION_TYPE_CONFIG, kafkaWikipediaProducerConfigData.compressionType());
-        properties.put(ProducerConfig.ACKS_CONFIG, kafkaWikipediaProducerConfigData.acks());
-        properties.put(ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG, kafkaWikipediaProducerConfigData.requestTimeoutMs());
-        properties.put(ProducerConfig.RETRIES_CONFIG, kafkaWikipediaProducerConfigData.retryCount());
+        properties.put(ProducerConfig.LINGER_MS_CONFIG,
+                kafkaWikipediaProducerConfigData.lingerMs());
+        properties.put(ProducerConfig.COMPRESSION_TYPE_CONFIG,
+                kafkaWikipediaProducerConfigData.compressionType());
+        properties.put(ProducerConfig.ACKS_CONFIG,
+                kafkaWikipediaProducerConfigData.acks());
+        properties.put(ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG,
+                kafkaWikipediaProducerConfigData.requestTimeoutMs());
+        properties.put(ProducerConfig.RETRIES_CONFIG,
+                kafkaWikipediaProducerConfigData.retryCount());
+        properties.put(ProducerConfig.MAX_REQUEST_SIZE_CONFIG,
+                kafkaWikipediaProducerConfigData.maxRequestSize());
+        properties.put(ProducerConfig.BATCH_SIZE_CONFIG,
+                kafkaWikipediaProducerConfigData.batchSize());
         LOGGER.debug("kafka Producer Config::");
         properties.forEach((k, v) -> {
             LOGGER.debug("{} : {} ", k, v);
@@ -63,7 +76,8 @@ public class KafkaProducerCofig<K extends Serializable, V extends SpecificRecord
 
     @Bean
     public ProducerFactory<K, V> producerFactory() {
-        ProducerFactory<K, V> producerFactory = new DefaultKafkaProducerFactory<>(producerConfig());
+        ProducerFactory<K, V> producerFactory = new DefaultKafkaProducerFactory<>(
+                producerConfig());
         return producerFactory;
     }
 
