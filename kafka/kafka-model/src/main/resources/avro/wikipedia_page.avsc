@@ -67,6 +67,10 @@
         {
             "name": "pageUrl",
             "type": "string"
+        },
+        {
+            "name": "fullPage",
+            "type": "string"
         }
     ]
 }

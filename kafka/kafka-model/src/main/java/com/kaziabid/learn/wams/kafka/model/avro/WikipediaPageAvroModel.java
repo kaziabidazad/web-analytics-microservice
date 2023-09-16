@@ -12,10 +12,10 @@ import org.apache.avro.specific.SpecificData;
 
 @org.apache.avro.specific.AvroGenerated
 public class WikipediaPageAvroModel extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = -5866772630865814184L;
+  private static final long serialVersionUID = 3273198273962954450L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"WikipediaPageAvroModel\",\"namespace\":\"com.kaziabid.learn.wams.kafka.model.avro\",\"fields\":[{\"name\":\"lang\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"type\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"title\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"displayTitle\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"wikibaseItem\",\"type\":[{\"type\":\"string\",\"avro.java.string\":\"String\"},\"null\"]},{\"name\":\"pageId\",\"type\":\"long\"},{\"name\":\"tid\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"timestamp\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"extract\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"extractHtml\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"normalizedTitle\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"thumbnail\",\"type\":[{\"type\":\"string\",\"avro.java.string\":\"String\"},\"null\"]},{\"name\":\"originalImage\",\"type\":[{\"type\":\"string\",\"avro.java.string\":\"String\"},\"null\"]},{\"name\":\"pageUrl\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"WikipediaPageAvroModel\",\"namespace\":\"com.kaziabid.learn.wams.kafka.model.avro\",\"fields\":[{\"name\":\"lang\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"type\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"title\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"displayTitle\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"wikibaseItem\",\"type\":[{\"type\":\"string\",\"avro.java.string\":\"String\"},\"null\"]},{\"name\":\"pageId\",\"type\":\"long\"},{\"name\":\"tid\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"timestamp\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"extract\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"extractHtml\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"normalizedTitle\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"thumbnail\",\"type\":[{\"type\":\"string\",\"avro.java.string\":\"String\"},\"null\"]},{\"name\":\"originalImage\",\"type\":[{\"type\":\"string\",\"avro.java.string\":\"String\"},\"null\"]},{\"name\":\"pageUrl\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"fullPage\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -85,6 +85,7 @@ public class WikipediaPageAvroModel extends org.apache.avro.specific.SpecificRec
   private java.lang.String thumbnail;
   private java.lang.String originalImage;
   private java.lang.String pageUrl;
+  private java.lang.String fullPage;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -109,8 +110,9 @@ public class WikipediaPageAvroModel extends org.apache.avro.specific.SpecificRec
    * @param thumbnail The new value for thumbnail
    * @param originalImage The new value for originalImage
    * @param pageUrl The new value for pageUrl
+   * @param fullPage The new value for fullPage
    */
-  public WikipediaPageAvroModel(java.lang.String lang, java.lang.String type, java.lang.String title, java.lang.String displayTitle, java.lang.String wikibaseItem, java.lang.Long pageId, java.lang.String tid, java.lang.String timestamp, java.lang.String extract, java.lang.String extractHtml, java.lang.String normalizedTitle, java.lang.String thumbnail, java.lang.String originalImage, java.lang.String pageUrl) {
+  public WikipediaPageAvroModel(java.lang.String lang, java.lang.String type, java.lang.String title, java.lang.String displayTitle, java.lang.String wikibaseItem, java.lang.Long pageId, java.lang.String tid, java.lang.String timestamp, java.lang.String extract, java.lang.String extractHtml, java.lang.String normalizedTitle, java.lang.String thumbnail, java.lang.String originalImage, java.lang.String pageUrl, java.lang.String fullPage) {
     this.lang = lang;
     this.type = type;
     this.title = title;
@@ -125,6 +127,7 @@ public class WikipediaPageAvroModel extends org.apache.avro.specific.SpecificRec
     this.thumbnail = thumbnail;
     this.originalImage = originalImage;
     this.pageUrl = pageUrl;
+    this.fullPage = fullPage;
   }
 
   @Override
@@ -151,6 +154,7 @@ public class WikipediaPageAvroModel extends org.apache.avro.specific.SpecificRec
     case 11: return thumbnail;
     case 12: return originalImage;
     case 13: return pageUrl;
+    case 14: return fullPage;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -173,6 +177,7 @@ public class WikipediaPageAvroModel extends org.apache.avro.specific.SpecificRec
     case 11: thumbnail = value$ != null ? value$.toString() : null; break;
     case 12: originalImage = value$ != null ? value$.toString() : null; break;
     case 13: pageUrl = value$ != null ? value$.toString() : null; break;
+    case 14: fullPage = value$ != null ? value$.toString() : null; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -416,6 +421,23 @@ public class WikipediaPageAvroModel extends org.apache.avro.specific.SpecificRec
   }
 
   /**
+   * Gets the value of the 'fullPage' field.
+   * @return The value of the 'fullPage' field.
+   */
+  public java.lang.String getFullPage() {
+    return fullPage;
+  }
+
+
+  /**
+   * Sets the value of the 'fullPage' field.
+   * @param value the value to set.
+   */
+  public void setFullPage(java.lang.String value) {
+    this.fullPage = value;
+  }
+
+  /**
    * Creates a new WikipediaPageAvroModel RecordBuilder.
    * @return A new WikipediaPageAvroModel RecordBuilder
    */
@@ -470,6 +492,7 @@ public class WikipediaPageAvroModel extends org.apache.avro.specific.SpecificRec
     private java.lang.String thumbnail;
     private java.lang.String originalImage;
     private java.lang.String pageUrl;
+    private java.lang.String fullPage;
 
     /** Creates a new Builder */
     private Builder() {
@@ -538,6 +561,10 @@ public class WikipediaPageAvroModel extends org.apache.avro.specific.SpecificRec
         this.pageUrl = data().deepCopy(fields()[13].schema(), other.pageUrl);
         fieldSetFlags()[13] = other.fieldSetFlags()[13];
       }
+      if (isValidValue(fields()[14], other.fullPage)) {
+        this.fullPage = data().deepCopy(fields()[14].schema(), other.fullPage);
+        fieldSetFlags()[14] = other.fieldSetFlags()[14];
+      }
     }
 
     /**
@@ -601,6 +628,10 @@ public class WikipediaPageAvroModel extends org.apache.avro.specific.SpecificRec
       if (isValidValue(fields()[13], other.pageUrl)) {
         this.pageUrl = data().deepCopy(fields()[13].schema(), other.pageUrl);
         fieldSetFlags()[13] = true;
+      }
+      if (isValidValue(fields()[14], other.fullPage)) {
+        this.fullPage = data().deepCopy(fields()[14].schema(), other.fullPage);
+        fieldSetFlags()[14] = true;
       }
     }
 
@@ -1163,6 +1194,46 @@ public class WikipediaPageAvroModel extends org.apache.avro.specific.SpecificRec
       return this;
     }
 
+    /**
+      * Gets the value of the 'fullPage' field.
+      * @return The value.
+      */
+    public java.lang.String getFullPage() {
+      return fullPage;
+    }
+
+
+    /**
+      * Sets the value of the 'fullPage' field.
+      * @param value The value of 'fullPage'.
+      * @return This builder.
+      */
+    public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder setFullPage(java.lang.String value) {
+      validate(fields()[14], value);
+      this.fullPage = value;
+      fieldSetFlags()[14] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'fullPage' field has been set.
+      * @return True if the 'fullPage' field has been set, false otherwise.
+      */
+    public boolean hasFullPage() {
+      return fieldSetFlags()[14];
+    }
+
+
+    /**
+      * Clears the value of the 'fullPage' field.
+      * @return This builder.
+      */
+    public com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel.Builder clearFullPage() {
+      fullPage = null;
+      fieldSetFlags()[14] = false;
+      return this;
+    }
+
     @Override
     public WikipediaPageAvroModel build() {
       try {
@@ -1181,6 +1252,7 @@ public class WikipediaPageAvroModel extends org.apache.avro.specific.SpecificRec
         record.thumbnail = fieldSetFlags()[11] ? this.thumbnail : (java.lang.String) defaultValue(fields()[11]);
         record.originalImage = fieldSetFlags()[12] ? this.originalImage : (java.lang.String) defaultValue(fields()[12]);
         record.pageUrl = fieldSetFlags()[13] ? this.pageUrl : (java.lang.String) defaultValue(fields()[13]);
+        record.fullPage = fieldSetFlags()[14] ? this.fullPage : (java.lang.String) defaultValue(fields()[14]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -1259,6 +1331,8 @@ public class WikipediaPageAvroModel extends org.apache.avro.specific.SpecificRec
 
     out.writeString(this.pageUrl);
 
+    out.writeString(this.fullPage);
+
   }
 
   @Override public void customDecode(org.apache.avro.io.ResolvingDecoder in)
@@ -1309,8 +1383,10 @@ public class WikipediaPageAvroModel extends org.apache.avro.specific.SpecificRec
 
       this.pageUrl = in.readString();
 
+      this.fullPage = in.readString();
+
     } else {
-      for (int i = 0; i < 14; i++) {
+      for (int i = 0; i < 15; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
           this.lang = in.readString();
@@ -1381,6 +1457,10 @@ public class WikipediaPageAvroModel extends org.apache.avro.specific.SpecificRec
 
         case 13:
           this.pageUrl = in.readString();
+          break;
+
+        case 14:
+          this.fullPage = in.readString();
           break;
 
         default:
