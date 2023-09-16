@@ -25,7 +25,8 @@ public class SolrDataConfig {
 
     @Bean
     public SolrClient solrClient() {
-        CloudSolrClient solrClient = new CloudSolrClient.Builder(kafkaToSolrConfigData.solrUrls())
+        CloudSolrClient solrClient = new CloudSolrClient.Builder(
+                kafkaToSolrConfigData.solrUrls())
                 .withDefaultCollection(
                         kafkaToSolrConfigData.wikipediaCollectionName())
                 .build();

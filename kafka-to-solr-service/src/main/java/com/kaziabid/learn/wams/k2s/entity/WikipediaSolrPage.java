@@ -7,6 +7,10 @@ import org.apache.solr.client.solrj.beans.Field;
  */
 public class WikipediaSolrPage {
 
+    
+    @Field
+    private String id;
+    
     @Field
     private String type;
     @Field
@@ -35,6 +39,8 @@ public class WikipediaSolrPage {
     private String originalImage;
     @Field
     private String pageUrl;
+    @Field
+    private String fullPage;
 
     /**
      * 
@@ -43,6 +49,7 @@ public class WikipediaSolrPage {
     }
 
     /**
+     * @param id
      * @param type
      * @param lang
      * @param title
@@ -57,13 +64,15 @@ public class WikipediaSolrPage {
      * @param thumbnail
      * @param originalImage
      * @param pageUrl
+     * @param fullPage
      */
-    public WikipediaSolrPage(String type, String lang, String title,
+    public WikipediaSolrPage(String id, String type, String lang, String title,
             String displayTitle, String wikibaseItem, Long pageId, String tid,
             String timestamp, String extract, String extractHtml,
             String normalizedTitle, String thumbnail, String originalImage,
-            String pageUrl) {
+            String pageUrl, String fullPage) {
         super();
+        this.id = id;
         this.type = type;
         this.lang = lang;
         this.title = title;
@@ -78,8 +87,11 @@ public class WikipediaSolrPage {
         this.thumbnail = thumbnail;
         this.originalImage = originalImage;
         this.pageUrl = pageUrl;
+        this.fullPage = fullPage;
     }
 
+
+ 
     
 
 }

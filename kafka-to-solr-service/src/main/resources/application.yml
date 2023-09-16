@@ -15,5 +15,64 @@ spring:
        multiplier: 1.5
        max-attempts: 1000
        max-interval: 30000
-       
+#       
 
+
+#For Local Testing without the config server:
+
+#spring:
+#  cloud:
+#    config:
+#      enabled: false
+#
+#server:
+#  port: 8183
+#
+#
+#kafka-config.wikipedia:
+#  bootstrap-servers: localhost:29092, localhost:29093, localhost:29094
+#  schema-registry-url-key: schema.registry.url
+#  schema-registry-url:  http://localhost:8081
+#  topic-name: wikipedia.pages
+#  topic-names-to-create:
+#    - wikipedia.pages
+#  number-of-partitions: 3
+#  replication-factor: 3
+#
+#kafka-consumer-solr-config:
+#  key-deserializer: org.apache.kafka.common.serialization.LongDeserializer
+#  value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+#  consumer-group-id: wikipediaPagesToSolrTopicListenerTest002
+#  auto-offset-reset: earliest
+#  specific-avro-reader-key: specific.avro.reader
+#  specific-avro-reader: true
+#  batch-listener: true
+## @Listener will not automatically. We will start it programatically
+#  auto-startup: false
+#  concurrency: 3
+#  session-timeout-ms: 10000
+#  heartbeat-interval-ms: 3000
+#  max-poll-interval-ms: 300000
+#  max-poll-records: 500
+#  max-partition-fetch-bytes-default: 1048576
+#  max-partition-fetch-bytes-boost-factor: 1
+#  poll-timeout-ms: 150
+#
+#
+#retry-config:
+#  initial-interval-ms: 3000
+#  max-interval-ms: 100000
+#  multiplier: 2.0
+#  maxAttempts: 10
+#  sleep-time-ms: 2000
+#  
+#solr:
+#  wikipedia-collection-name: wikipedia
+#  zookeeper-urls:
+#    - "solr-zoo1:12181"
+#    - "solr-zoo2:22181"
+#    - "solr-zoo3:32181"
+#  solr-urls:
+#    - "http://localhost:18983/solr"
+#    - "http://localhost:28983/solr"
+#    - "http://localhost:38983/solr"
