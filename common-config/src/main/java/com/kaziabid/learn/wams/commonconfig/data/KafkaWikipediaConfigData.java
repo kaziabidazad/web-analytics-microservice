@@ -9,19 +9,13 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @ConfigurationProperties(prefix = "kafka-config.wikipedia")
 public record KafkaWikipediaConfigData(
-
         String bootstrapServers,
-
         String schemaRegistryUrlKey,
-
         String schemaRegistryUrl,
-
         String topicName,
-
         List<String> topicNamesToCreate,
-
         Integer numberOfpartitions,
-
-        Short replicationFactor) {
+        Short replicationFactor,
+        Long topicMaxMessageBytes) {
 
 }
