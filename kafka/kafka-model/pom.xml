@@ -17,6 +17,10 @@
             <artifactId>avro</artifactId>
             <version>1.11.2</version>
         </dependency>
+        <dependency>
+            <groupId>com.kaziabid.learn.wams</groupId>
+            <artifactId>common-dto</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

@@ -24,7 +24,6 @@
         <dependency>
             <groupId>com.kaziabid.learn.wams</groupId>
             <artifactId>common-config</artifactId>
-            <version>${project.version}</version>
         </dependency>
     </dependencies>
 

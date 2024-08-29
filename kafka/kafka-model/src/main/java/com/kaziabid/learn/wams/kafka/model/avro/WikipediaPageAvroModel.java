@@ -12,10 +12,10 @@ import org.apache.avro.specific.SpecificData;
 
 @org.apache.avro.specific.AvroGenerated
 public class WikipediaPageAvroModel extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 3273198273962954450L;
+  private static final long serialVersionUID = 6698004299022292469L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"WikipediaPageAvroModel\",\"namespace\":\"com.kaziabid.learn.wams.kafka.model.avro\",\"fields\":[{\"name\":\"lang\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"type\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"title\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"displayTitle\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"wikibaseItem\",\"type\":[{\"type\":\"string\",\"avro.java.string\":\"String\"},\"null\"]},{\"name\":\"pageId\",\"type\":\"long\"},{\"name\":\"tid\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"timestamp\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"extract\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"extractHtml\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"normalizedTitle\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"thumbnail\",\"type\":[{\"type\":\"string\",\"avro.java.string\":\"String\"},\"null\"]},{\"name\":\"originalImage\",\"type\":[{\"type\":\"string\",\"avro.java.string\":\"String\"},\"null\"]},{\"name\":\"pageUrl\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"fullPage\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"WikipediaPageAvroModel\",\"namespace\":\"com.kaziabid.learn.wams.kafka.model.avro\",\"fields\":[{\"name\":\"lang\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"type\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"title\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"displayTitle\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"wikibaseItem\",\"type\":[{\"type\":\"string\",\"avro.java.string\":\"String\"},\"null\"]},{\"name\":\"pageId\",\"type\":\"long\"},{\"name\":\"tid\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"timestamp\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"extract\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"extractHtml\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"normalizedTitle\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"thumbnail\",\"type\":[{\"type\":\"string\",\"avro.java.string\":\"String\"},\"null\"]},{\"name\":\"originalImage\",\"type\":[{\"type\":\"string\",\"avro.java.string\":\"String\"},\"null\"]},{\"name\":\"pageUrl\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"fullPage\",\"type\":[{\"type\":\"string\",\"avro.java.string\":\"String\"},\"null\"]}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -1331,7 +1331,13 @@ public class WikipediaPageAvroModel extends org.apache.avro.specific.SpecificRec
 
     out.writeString(this.pageUrl);
 
-    out.writeString(this.fullPage);
+    if (this.fullPage == null) {
+      out.writeIndex(1);
+      out.writeNull();
+    } else {
+      out.writeIndex(0);
+      out.writeString(this.fullPage);
+    }
 
   }
 
@@ -1383,7 +1389,12 @@ public class WikipediaPageAvroModel extends org.apache.avro.specific.SpecificRec
 
       this.pageUrl = in.readString();
 
-      this.fullPage = in.readString();
+      if (in.readIndex() != 0) {
+        in.readNull();
+        this.fullPage = null;
+      } else {
+        this.fullPage = in.readString();
+      }
 
     } else {
       for (int i = 0; i < 15; i++) {
@@ -1460,7 +1471,12 @@ public class WikipediaPageAvroModel extends org.apache.avro.specific.SpecificRec
           break;
 
         case 14:
-          this.fullPage = in.readString();
+          if (in.readIndex() != 0) {
+            in.readNull();
+            this.fullPage = null;
+          } else {
+            this.fullPage = in.readString();
+          }
           break;
 
         default:

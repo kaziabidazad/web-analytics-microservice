@@ -70,7 +70,10 @@
         },
         {
             "name": "fullPage",
-            "type": "string"
+            "type": [
+                "string",
+                "null"
+            ]
         }
     ]
 }
