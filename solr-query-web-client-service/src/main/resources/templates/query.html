@@ -1,0 +1,60 @@
+<div th:replace="header"></div>
+
+<div class="container">
+	<h1>Query Client</h1>
+	<div class="mx-auto mt-5">
+		<form class="col-12" action="#" th:action="@{/query}"
+			th:object="${queryRequestModel}" method="post">
+			<div class="form-group">
+				<input class="form-control" type="text" th:field="*{query}"
+					id="query" placeholder="Enter text to search"> <span
+					th:if="${#fields.hasErrors('query')}" th:errors="*{query}"></span>
+				<div class="text-center mt-5">
+					<input class="btn btn-dark" type="submit" value="Search">
+				</div>
+			</div>
+			<div th:if="${#ctx.containsVariable('queryResponseModel')}">
+				<div class="col-12" th:switch="${queryResponseModel.data}">
+					<h4 th:case="null">
+						<span th:text="${error != null} ? ${error} : 'No results yet!'" />
+					</h4>
+					<div th:case="*">
+						<h4>
+							Search results:
+							<!--  '<span th:text="${searchText}" />' -->
+						</h4>
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th scope="col">id</th>
+									<th scope="col">title</th>
+									<th scope="col">extract</th>
+									<th scope="col">Image</th>
+									<th scope="col">Page</th>
+									<th scope="col">date</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="page : ${queryResponseModel.data}">
+									<th scope="row" th:text="${page.id}"></th>
+									<td th:text="${page.normalizedTitle}"></td>
+									<td th:text="${page.extract}"></td>
+									<td><img width="100" th:src="${page.thumbnail}" /></td>
+									<td><a th:target="_blank" th:href="${page.pageUrl}">page</a></td>
+									<td th:text="${page.timestamp}"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+		</form>
+	</div>
+</div>
+
+<div th:replace="footer"></div>
+
+
+
+
