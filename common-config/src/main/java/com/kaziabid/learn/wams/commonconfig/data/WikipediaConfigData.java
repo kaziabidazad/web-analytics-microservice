@@ -9,6 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public record WikipediaConfigData(
         String wikipediadateformat,
         String wikipediaFeaturedFeedUrl,
+        boolean indexCompletePage,
         WikipediaPageHtmlApiConfigData wikipediaPageHtmlApi) {
 
 }

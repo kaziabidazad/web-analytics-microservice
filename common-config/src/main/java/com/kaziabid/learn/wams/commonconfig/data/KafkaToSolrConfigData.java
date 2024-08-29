@@ -10,6 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "solr")
 public record KafkaToSolrConfigData(
         String wikipediaCollectionName,
+        boolean indexCompletePage,
         List<String> zookeeperUrls,
         List<String> solrUrls) {
 
