@@ -16,8 +16,10 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
+import com.kaziabid.learn.wams.commonconfig.data.KafkaToSolrConfigData;
 import com.kaziabid.learn.wams.commonconfig.data.KafkaWikipediaConfigData;
 import com.kaziabid.learn.wams.commonconfig.data.KafkaWikipediaConsumerSolrConfigData;
+import com.kaziabid.learn.wams.exceptions.WamsServiceInitializationException;
 import com.kaziabid.learn.wams.k2s.consumer.service.KafkaSolrConsumer;
 import com.kaziabid.learn.wams.kafka.model.avro.WikipediaPageAvroModel;
 import com.kaziabid.learn.wams.kafkaadmin.clients.KafkaWikipediaAdminClient;
@@ -27,17 +29,17 @@ import com.kaziabid.learn.wams.kafkaadmin.clients.KafkaWikipediaAdminClient;
  */
 @Component
 public class WikipediaKafkaToSolrConsumer
-        implements
-            KafkaSolrConsumer<Long, WikipediaPageAvroModel> {
+        implements KafkaSolrConsumer<Long, WikipediaPageAvroModel> {
 
-    private static final Logger LOGGER = LoggerFactory
-            .getLogger(WikipediaKafkaToSolrConsumer.class);
+    private static final Logger                 LOGGER =
+            LoggerFactory.getLogger(WikipediaKafkaToSolrConsumer.class);
     private final KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry;
-    private final KafkaWikipediaAdminClient kafkaWikipediaAdminClient;
-    private final KafkaWikipediaConfigData kafkaWikipediaConfigData;
-//    private final String listerID = "wikipediaPagesToSolrTopicListenerTest001";
+    private final KafkaWikipediaAdminClient     kafkaWikipediaAdminClient;
+    private final KafkaWikipediaConfigData      kafkaWikipediaConfigData;
+    // private final String listerID = "wikipediaPagesToSolrTopicListenerTest001";
     private final BlockingQueue<WikipediaPageAvroModel> wikipediaAvroQueue;
-    private final KafkaWikipediaConsumerSolrConfigData kafkaWikipediaConsumerSolrConfigData;
+    private final KafkaWikipediaConsumerSolrConfigData  kafkaWikipediaConsumerSolrConfigData;
+    private final KafkaToSolrConfigData                 kafkaToSolrConfigData;
 
     /**
      * @param kafkaListenerEndpointRegistry
@@ -48,54 +50,59 @@ public class WikipediaKafkaToSolrConsumer
             KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry,
             KafkaWikipediaAdminClient kafkaWikipediaAdminClient,
             KafkaWikipediaConfigData kafkaConfigData,
-            @Autowired @Qualifier(
-                "wikipediaAvroQueue"
-            ) BlockingQueue<WikipediaPageAvroModel> wikipediaAvroQueue,
-            KafkaWikipediaConsumerSolrConfigData kafkaWikipediaConsumerSolrConfigData) {
+            @Autowired @Qualifier("wikipediaAvroQueue") BlockingQueue<
+                    WikipediaPageAvroModel> wikipediaAvroQueue,
+            KafkaWikipediaConsumerSolrConfigData kafkaWikipediaConsumerSolrConfigData,
+            KafkaToSolrConfigData kafkaToSolrConfigData) {
         super();
         this.kafkaListenerEndpointRegistry = kafkaListenerEndpointRegistry;
         this.kafkaWikipediaAdminClient = kafkaWikipediaAdminClient;
         this.kafkaWikipediaConfigData = kafkaConfigData;
         this.wikipediaAvroQueue = wikipediaAvroQueue;
         this.kafkaWikipediaConsumerSolrConfigData = kafkaWikipediaConsumerSolrConfigData;
+        this.kafkaToSolrConfigData = kafkaToSolrConfigData;
     }
 
     @EventListener(value = ApplicationStartedEvent.class)
     public void onStartup() {
         kafkaWikipediaAdminClient.checkTopicsCreated();
-        LOGGER.info("Topics with name {} is ready for operation!",
-                kafkaWikipediaConfigData.topicNamesToCreate().toArray());
-        kafkaListenerEndpointRegistry
+        LOGGER
+                .info("Topics with name {} is ready for operation!",
+                        kafkaWikipediaConfigData.topicNamesToCreate().toArray());
+        var listerner = kafkaListenerEndpointRegistry
                 .getListenerContainer(
-                        kafkaWikipediaConsumerSolrConfigData.consumerGroupId())
-                .start();
+                        kafkaWikipediaConsumerSolrConfigData.consumerGroupId());
+        if (listerner == null)
+            throw new WamsServiceInitializationException(
+                    "Unable to initialize kafka lister! Please check your configuration!");
+        listerner.start();
     }
 
     @Override
     @KafkaListener(
             id = "${kafka-consumer-solr-config.consumer-group-id}",
             topics = "${kafka-config.wikipedia.topic-name}",
-            concurrency = "${kafka-consumer-solr-config.concurrency}"
-    )
+            concurrency = "${kafka-consumer-solr-config.concurrency}")
     public void receive(@Payload List<WikipediaPageAvroModel> messages,
             @Header(KafkaHeaders.RECEIVED_PARTITION) List<Integer> partitions,
             @Header(KafkaHeaders.OFFSET) List<Long> offsets) {
 
-        LOGGER.info(
-                "{} number of messages received with partitions {} and offsets {}, "
-                        + "sending it to elastic: Thread id: {}",
-                messages.size(), partitions.toString(), offsets.toString(),
-                Thread.currentThread().getId());
-        messages.stream().filter(m -> m != null)
-                .forEach(m -> {
-                    try {
-                        wikipediaAvroQueue.put(m);
-                    } catch (InterruptedException e) {
-                        LOGGER.error(
-                                "Error adding message to the blocking queue for pageId: {} and Title: {} ",
+        LOGGER
+                .info("{} number of messages received with partitions {} and offsets {}, "
+                        + "sending it to Solr: Thread id: {}", messages.size(),
+                        partitions.toString(), offsets.toString(),
+                        Thread.currentThread().threadId());
+        messages.stream().filter(m -> m != null).forEach(m -> {
+            try {
+                if (!kafkaToSolrConfigData.indexCompletePage())
+                    m.setFullPage(null);
+                wikipediaAvroQueue.put(m);
+            } catch (InterruptedException e) {
+                LOGGER
+                        .error("Error adding message to the blocking queue for pageId: {} and Title: {} ",
                                 m.getPageId(), m.getTitle());
-                    }
-                });
+            }
+        });
     }
 
     /*

@@ -7,7 +7,8 @@ spring:
     import: configserver:http://config-server:8888
   cloud:
     config:
-      name: kafka-to-solr-service, config-client
+      name: config-client,kafka-config,kafka-consumer-solr-config,solr-server-config,solr-query-service
+      profile: config-client,kafka-config,kafka-consumer-solr-config,solr-server-config,solr-query-service
       uri: http://config-server:8888
     fail-fast: true
     retry:
