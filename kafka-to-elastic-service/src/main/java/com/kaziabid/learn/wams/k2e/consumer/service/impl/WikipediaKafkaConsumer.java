@@ -59,7 +59,7 @@ public class WikipediaKafkaConsumer implements KafkaConsumer<Long, WikipediaPage
         LOGGER.info(
                 "{} number of messages received with partitions {} and offsets {}, "
                         + "sending it to elastic: Thread id: {}",
-                messages.size(), partitions.toString(), offsets.toString(), Thread.currentThread().getId());
+                messages.size(), partitions.toString(), offsets.toString(), Thread.currentThread().threadId());
 
     }
 
