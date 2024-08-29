@@ -16,12 +16,10 @@
         <dependency>
             <groupId>com.kaziabid.learn.wams</groupId>
             <artifactId>common-config</artifactId>
-            <version>0.0.1</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-config-server</artifactId>
-            <version>4.0.4</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -39,6 +37,9 @@
                     <image>
                         <name>
                             wams/${project.artifactId}:${project.version}</name>
+                        <env>
+                            <BP_JVM_VERSION>${maven.compiler.release}</BP_JVM_VERSION>
+                        </env>
                     </image>
                 </configuration>
                 <executions>
