@@ -1,0 +1,20 @@
+services:
+  solr-query-service:
+    hostname: solr-query-service
+    image: wams/solr-query-service:${SERVICE_VERSION:-latest}
+    user: root
+    ports:
+      - "5007:5006"
+      - "8183:8183"
+      #  external:internal
+    volumes:
+      - "../docker-logs:/workspaces/solr-query-service/logs"
+    environment:
+      - "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5006 -Xms128m -Xmx1024m"
+    networks: 
+      - wams
+
+  
+networks:
+ wams:
+   external: true

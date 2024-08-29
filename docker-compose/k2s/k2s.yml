@@ -1,13 +1,11 @@
-version: '3.7'
-
 services:
-  wikipedia-to-kafka-service:
+  kafka-to-solr-service:
     image: wams/kafka-to-solr-service:${SERVICE_VERSION:-latest}
-    hostname: wikipedia-to-kafka-service
+    hostname: kafka-to-solr-service
     user: root
     entrypoint: ["check-config-server-started.sh"]
     ports:
-      - "5007:5005"
+      - "5008:5005"
       - "5109:8080"
     volumes:
       - "../docker-logs:/workspaces/kafka-to-solr-service/logs"
