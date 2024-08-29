@@ -7,7 +7,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.apache.hc.client5.http.classic.HttpClient;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
@@ -45,22 +44,20 @@ import com.kaziabid.learn.wams.w2k.service.transformer.WikipediaPageToAvroTransf
 @Component
 public class WikipediaDataExtractor {
 
-    private static final Logger LOGGER = LoggerFactory
-            .getLogger(WikipediaDataExtractor.class);
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(WikipediaDataExtractor.class);
 
-    private final KafkaWikipediaConfigData kafkaWikipediaConfigData;
+    private final KafkaWikipediaConfigData                    kafkaWikipediaConfigData;
     private final KafkaProducer<Long, WikipediaPageAvroModel> kafkaProducer;
-    private final WikipediaPageToAvroTransformer avroTransformer;
-    private final WikipediaConfigData wikipediaConfigData;
-    private final ObjectMapper objectMapper;
+    private final WikipediaPageToAvroTransformer              avroTransformer;
+    private final WikipediaConfigData                         wikipediaConfigData;
+    private final ObjectMapper                                objectMapper;
 
-    public WikipediaDataExtractor(
-            KafkaWikipediaConfigData kafkaWikipediaConfigData,
+    public WikipediaDataExtractor(KafkaWikipediaConfigData kafkaWikipediaConfigData,
             KafkaProducer<Long, WikipediaPageAvroModel> kafkaProducer,
             WikipediaPageToAvroTransformer avroTransformer,
-            WikipediaConfigData wikipediaConfigData, @Autowired @Qualifier(
-                "wikiPageObjectMapper"
-            ) ObjectMapper objectMapper) {
+            WikipediaConfigData wikipediaConfigData,
+            @Autowired @Qualifier("wikiPageObjectMapper") ObjectMapper objectMapper) {
         this.kafkaWikipediaConfigData = kafkaWikipediaConfigData;
         this.kafkaProducer = kafkaProducer;
         this.avroTransformer = avroTransformer;
@@ -70,36 +67,29 @@ public class WikipediaDataExtractor {
 
     @Async
     public void extractWikipediaPagePerDay(LocalDate startDate) {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter
-                .ofPattern(wikipediaConfigData.wikipediadateformat());
+        DateTimeFormatter dateTimeFormatter =
+                DateTimeFormatter.ofPattern(wikipediaConfigData.wikipediadateformat());
         String datepath = startDate.format(dateTimeFormatter);
         LOGGER.info("extracting for date: {}", datepath);
 
         HttpClient httpClient = HttpClientBuilder.create().build();
-        Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT,
-                "application/json");
+        Header acceptHeader = new BasicHeader(HttpHeaders.ACCEPT, "application/json");
         try {
             HttpGet getRequest = new HttpGet(
-                    new URIBuilder(
-                            wikipediaConfigData.wikipediaFeaturedFeedUrl())
+                    new URIBuilder(wikipediaConfigData.wikipediaFeaturedFeedUrl())
                             .appendPath(datepath).build());
             getRequest.addHeader(acceptHeader);
-            WikiFeedResult feedResult = httpClient.execute(getRequest,
-                    new HttpClientResponseHandler<WikiFeedResult>() {
+            WikiFeedResult feedResult = httpClient
+                    .execute(getRequest, new HttpClientResponseHandler<WikiFeedResult>() {
                         @Override
-                        public WikiFeedResult handleResponse(
-                                ClassicHttpResponse response)
+                        public WikiFeedResult handleResponse(ClassicHttpResponse response)
                                 throws HttpException, IOException {
-                            String data = new String(response.getEntity()
-                                    .getContent().readAllBytes());
-                            WikiFeedResult feedResult = objectMapper
-                                    .readValue(data, WikiFeedResult.class);
-//                    LOGGER.info("Data: {} ",
-//                            objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(feedResult));
-                            return feedResult;
+                            String data = new String(
+                                    response.getEntity().getContent().readAllBytes());
+                            return objectMapper.readValue(data, WikiFeedResult.class);
                         }
                     });
-//            LOGGER.info("Wiki Feed: {}", feedResult);
+            // LOGGER.info("Wiki Feed: {}", feedResult);
             pushFeedresultToKafka(feedResult);
         } catch (URISyntaxException e) {
             LOGGER.error("Error building URI: ", e);
@@ -109,18 +99,20 @@ public class WikipediaDataExtractor {
     }
 
     private void pushFeedresultToKafka(WikiFeedResult feedResult) {
-        List<WikipediaPageAvroModel> wikiPages = extractWikiPagesFromFeedResult(
-                feedResult);
-        wikiPages.forEach(avro -> kafkaProducer
-                .send(kafkaWikipediaConfigData.topicName(), avro));
+        List<WikipediaPageAvroModel> wikiPages =
+                extractWikiPagesFromFeedResult(feedResult);
+        wikiPages
+                .forEach(avro -> kafkaProducer
+                        .send(kafkaWikipediaConfigData.topicName(), avro));
     }
 
     /**
      * @param feedResult
+     * 
      * @return
      */
-    private List<WikipediaPageAvroModel> extractWikiPagesFromFeedResult(
-            WikiFeedResult feedResult) {
+    private List<WikipediaPageAvroModel>
+            extractWikiPagesFromFeedResult(WikiFeedResult feedResult) {
         List<WikipediaPageAvroModel> wikiPages = new ArrayList<>();
         List<WikiPage> allPages = new ArrayList<>();
         WikiPage tfa = feedResult.todaysFetauredArticle();
@@ -139,70 +131,57 @@ public class WikipediaDataExtractor {
             });
         }
 
-        wikiPages
-                .addAll(allPages.stream().filter(p -> p != null)
-                        .map(wikipage -> {
-                            String pageTitle = wikipage.title();
-                            // Extract Full page
-                            String fullHtmlContent = extractFullHtmlWikiContent(
-                                    pageTitle);
-                            WikiFullPage wikiFullPage = new WikiFullPage(
-                                    wikipage, fullHtmlContent);
-                            WikipediaPageAvroModel wikipediaPageAvroModelFromPage = avroTransformer
-                                    .getWikipediaPageAvroModelFromPage(
-                                            wikiFullPage);
-                            return wikipediaPageAvroModelFromPage;
-                        })
-                        .collect(Collectors.toList()));
-    
+        wikiPages.addAll(allPages.stream().filter(p -> p != null).map(wikipage -> {
+            String pageTitle = wikipage.title();
+            // Extract Full page
+            String fullHtmlContent = null;
+            if (wikipediaConfigData.indexCompletePage()) {
+                fullHtmlContent = extractFullHtmlWikiContent(pageTitle);
+            }
+            WikiFullPage wikiFullPage = new WikiFullPage(wikipage, fullHtmlContent);
+            return avroTransformer.getWikipediaPageAvroModelFromPage(wikiFullPage);
+        }).toList());
+
         return wikiPages;
     }
 
     private String extractFullHtmlWikiContent(String pageTitle) {
         String fullPageHtml = null;
-        List<UrlParam> params = wikipediaConfigData.wikipediaPageHtmlApi()
-                .urlParams();
+        List<UrlParam> params = wikipediaConfigData.wikipediaPageHtmlApi().urlParams();
         if (params == null) {
-            LOGGER.warn(
-                    "Url params config is not found.. Cannot extract full page content..");
+            LOGGER
+                    .warn("Url params config is not found.. Cannot extract full page content..");
             return null;
         }
         final URIBuilder uriBuilder;
         try {
-            uriBuilder = new URIBuilder(
-                    wikipediaConfigData.wikipediaPageHtmlApi().baseUrl());
+            uriBuilder =
+                    new URIBuilder(wikipediaConfigData.wikipediaPageHtmlApi().baseUrl());
         } catch (URISyntaxException e) {
-            LOGGER.error(
-                    "Error building uri from {}  Cannot extract full page content..: ",
-                    wikipediaConfigData.wikipediaPageHtmlApi().baseUrl(), e);
+            LOGGER
+                    .error("Error building uri from {}  Cannot extract full page content..: ",
+                            wikipediaConfigData.wikipediaPageHtmlApi().baseUrl(), e);
             return null;
         }
-        uriBuilder
-                .appendPath(pageTitle);
-        params.stream().forEach(p -> {
-            uriBuilder.addParameter(p.name(), p.value());
-        });
+        uriBuilder.appendPath(pageTitle);
+        params.stream().forEach(p -> uriBuilder.addParameter(p.name(), p.value()));
         try {
             URI wikipediaFullPageUri = uriBuilder.build();
             HttpGet getRequest = new HttpGet(wikipediaFullPageUri);
             HttpClient httpClient = HttpClientBuilder.create().build();
-            fullPageHtml = httpClient.execute(getRequest,
-                    new HttpClientResponseHandler<String>() {
+            fullPageHtml = httpClient
+                    .execute(getRequest, new HttpClientResponseHandler<String>() {
                         @Override
-                        public String handleResponse(
-                                ClassicHttpResponse response)
+                        public String handleResponse(ClassicHttpResponse response)
                                 throws HttpException, IOException {
-                            String data = new String(response.getEntity()
-                                    .getContent().readAllBytes());
-//                LOGGER.info("Data: {} ",
-//                        objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(feedResult));
-                            return data;
+                            return new String(
+                                    response.getEntity().getContent().readAllBytes());
                         }
                     });
         } catch (URISyntaxException | IOException e) {
-            LOGGER.error(
-                    "Error calling wiki page api:  Cannot extract full page content.. ",
-                    e);
+            LOGGER
+                    .error("Error calling wiki page api:  Cannot extract full page content.. ",
+                            e);
         }
         return fullPageHtml;
     }

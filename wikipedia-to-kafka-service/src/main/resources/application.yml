@@ -7,7 +7,8 @@ spring:
     import: configserver:http://config-server:8888
   cloud:
     config:
-      name: wikipedia-to-kafka-service, config-client
+      name: config-client,kafka-config,kafka-producer-wiki,wiki-kafka-service-config
+      profile: config-client,kafka-config,kafka-producer-wiki,wiki-kafka-service-config
       uri: http://config-server:8888
     fail-fast: true
     retry:
@@ -16,7 +17,6 @@ spring:
        max-attempts: 1000
        max-interval: 30000
        
-
 
 
 #For Local Testing without the config server:
