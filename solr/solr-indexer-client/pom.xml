@@ -1,0 +1,40 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.kaziabid.learn.wams</groupId>
+        <artifactId>solr</artifactId>
+        <version>0.0.1</version>
+    </parent>
+    <artifactId>solr-indexer-client</artifactId>
+    <packaging>jar</packaging>
+    <name>solr-indexer-client</name>
+    <description>Client library for write, update and delete operations on solr
+        indexes</description>
+    <dependencies>
+        <dependency>
+            <groupId>com.kaziabid.learn.wams</groupId>
+            <artifactId>solr-common</artifactId>
+        </dependency>
+    </dependencies>
+    <dependencyManagement>
+        <!-- This below dependecy is added to override the spring provided jetty
+        versions. -->
+        <!-- As solrj cannot work with jetty 10.+ jars because it fucking does
+        not use the new jakarta imports.-->
+        <!-- Doing this will restrict the usage of spring rest features which is
+        acceptable for this library as it will only index from kafka topics.-->
+        <!--    As soon as solr 10+ is released with the support of jetty 12+, this
+        code should be removed. But I have no other choice now-->
+        <dependencies>
+            <dependency>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-bom</artifactId>
+                <version>10.0.20</version>
+                <type>pom</type>
+                <scope>compile</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>
