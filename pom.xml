@@ -1,12 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.2</version>
+        <version>3.3.2</version>
     </parent>
 
     <groupId>com.kaziabid.learn.wams</groupId>
@@ -18,10 +18,11 @@
         Application.</description>
 
     <properties>
-        <spring-data-solr-version>4.3.15</spring-data-solr-version>
-        <maven.compiler.release>17</maven.compiler.release>
-        <spring-cloud-starter-config-version>4.0.4</spring-cloud-starter-config-version>
-        <kafka-avro-serializer-version>7.4.0</kafka-avro-serializer-version>
+        <maven.compiler.release>21</maven.compiler.release>
+        <spring-cloud-version>4.1.3</spring-cloud-version>
+        <kafka-avro-serializer-version>7.7.0</kafka-avro-serializer-version>
+        <solr.version>9.6.1</solr.version>
+        <springdoc-openapi.version>2.6.0</springdoc-openapi.version>
     </properties>
 
     <dependencies>
@@ -46,7 +47,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-log4j2</artifactId>
@@ -65,8 +65,13 @@
         <dependencies>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-config-server</artifactId>
+                <version>${spring-cloud-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-config</artifactId>
-                <version>${spring-cloud-starter-config-version}</version>
+                <version>${spring-cloud-version}</version>
             </dependency>
             <dependency>
                 <groupId>io.confluent</groupId>
@@ -94,16 +99,78 @@
             <dependency>
                 <groupId>org.apache.solr</groupId>
                 <artifactId>solr-solrj</artifactId>
-                <version>9.3.0</version>
+                <version>${solr.version}</version>
             </dependency>
-            <!--
-            https://mvnrepository.com/artifact/org.apache.solr/solr-solrj-zookeeper -->
             <dependency>
                 <groupId>org.apache.solr</groupId>
                 <artifactId>solr-solrj-zookeeper</artifactId>
-                <version>9.3.0</version>
+                <version>${solr.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>com.kaziabid.learn.wams</groupId>
+                <artifactId>common-libs</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kaziabid.learn.wams</groupId>
+                <artifactId>common-dto</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kaziabid.learn.wams</groupId>
+                <artifactId>config-server</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kaziabid.learn.wams</groupId>
+                <artifactId>common-config</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kaziabid.learn.wams</groupId>
+                <artifactId>solr-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kaziabid.learn.wams</groupId>
+                <artifactId>kafka-producer</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kaziabid.learn.wams</groupId>
+                <artifactId>kafka-consumer</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kaziabid.learn.wams</groupId>
+                <artifactId>kafka-admin</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kaziabid.learn.wams</groupId>
+                <artifactId>kafka-model</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kaziabid.learn.wams</groupId>
+                <artifactId>common-exceptions</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kaziabid.learn.wams</groupId>
+                <artifactId>solr-query-client</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kaziabid.learn.wams</groupId>
+                <artifactId>solr-indexer-client</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                <version>${springdoc-openapi.version}</version>
+            </dependency>
         </dependencies>
 
     </dependencyManagement>
@@ -118,6 +185,11 @@
         <module>kafka-to-elastic-service</module>
         <module>kafka-to-solr-service</module>
         <module>common-dto</module>
+        <module>solr</module>
+        <module>common-exceptions</module>
+        <module>solr-query-service</module>
+        <module>common-libs</module>
+        <module>solr-query-web-client-service</module>
     </modules>
 
 
