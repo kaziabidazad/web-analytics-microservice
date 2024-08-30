@@ -1,5 +1,7 @@
 package com.kaziabid.learn.wams.commonconfig.data;
 
+import java.util.List;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -11,8 +13,13 @@ public record SolrQueryWebClientServiceWebClientConfigData(
 
     public record WebClientConfigData(
             long connectTimeoutMs, long readTimeoutMs, long writeTimeoutMs,
-            long maxInMemorySize, String contentType, String acceptType,
-            String solrQueryServiceBaseUrl) {
+            int maxInMemorySize, String contentType, String acceptType,
+            String solrQueryServiceBaseUrl, String serviceId,
+            List<SolrQueryServiceInstance> instances) {
+
+    }
+
+    public record SolrQueryServiceInstance(String id, String host, int port) {
 
     }
 
