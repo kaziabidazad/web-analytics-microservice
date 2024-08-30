@@ -1,5 +1,5 @@
 services:
-  solr-query-service:
+  solr-query-service-1:
     hostname: solr-query-service
     image: wams/solr-query-service:${SERVICE_VERSION:-latest}
     user: root
@@ -13,6 +13,34 @@ services:
       - "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5006 -Xms128m -Xmx1024m"
     networks: 
       - wams
+  solr-query-service-2:
+      hostname: solr-query-service
+      image: wams/solr-query-service:${SERVICE_VERSION:-latest}
+      user: root
+      ports:
+        - "5008:5006"
+        - "8185:8183"
+        #  external:internal
+      volumes:
+        - "../docker-logs:/workspaces/solr-query-service/logs"
+      environment:
+        - "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5006 -Xms128m -Xmx1024m"
+      networks: 
+        - wams
+  solr-query-service-3:
+      hostname: solr-query-service
+      image: wams/solr-query-service:${SERVICE_VERSION:-latest}
+      user: root
+      ports:
+        - "5009:5006"
+        - "8186:8183"
+        #  external:internal
+      volumes:
+        - "../docker-logs:/workspaces/solr-query-service/logs"
+      environment:
+        - "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5006 -Xms128m -Xmx1024m"
+      networks: 
+        - wams
 
   
 networks:
