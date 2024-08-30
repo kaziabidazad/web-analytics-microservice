@@ -74,6 +74,11 @@
                 <version>${spring-cloud-version}</version>
             </dependency>
             <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+                <version>${spring-cloud-version}</version>
+            </dependency>
+            <dependency>
                 <groupId>io.confluent</groupId>
                 <artifactId>kafka-avro-serializer</artifactId>
                 <version>${kafka-avro-serializer-version}</version>
@@ -190,6 +195,7 @@
         <module>solr-query-service</module>
         <module>common-libs</module>
         <module>solr-query-web-client-service</module>
+        <module>solr-query-rx-web-app-service</module>
     </modules>
 
 
