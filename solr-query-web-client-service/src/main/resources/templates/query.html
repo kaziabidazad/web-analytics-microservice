@@ -36,11 +36,11 @@
 							</thead>
 							<tbody>
 								<tr th:each="page : ${queryResponseModel.data}">
-									<th scope="row" th:text="${page.id}"></th>
-									<td th:text="${page.normalizedTitle}"></td>
-									<td th:text="${page.extract}"></td>
-									<td><img width="100" th:src="${page.thumbnail}" /></td>
-									<td><a th:target="_blank" th:href="${page.pageUrl}">page</a></td>
+									<th scope="row" th:text="${page.pageId}"></th>
+									<td th:text="${page.pageTitle}"></td>
+									<td th:text="${page.pageContent}"></td>
+									<td><img width="100" th:src="${page.imageUrl}" /></td>
+									<td><a th:target="_blank" th:href="${page.pageLinkUrl}">page</a></td>
 									<td th:text="${page.timestamp}"></td>
 								</tr>
 							</tbody>

@@ -37,7 +37,7 @@
                     },
                     {
                         "ref": "Console-Appender",
-                        "level": "DEBUG"
+                        "level": "INFO"
                     }
                 ]
             },
