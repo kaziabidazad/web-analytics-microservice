@@ -1,0 +1,20 @@
+services:
+  solr-rx-web-client-service:
+    hostname: solr-rx-web-client-service
+    image: wams/solr-query-rx-web-app-service:${SERVICE_VERSION:-latest}
+    user: root
+    ports:
+      - "6007:5006"
+      - "8284:8284"
+      #  external:internal
+    volumes:
+      - "../docker-logs:/workspaces/solr-query-rx-web-app-service/logs"
+    environment:
+      - "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5006 -Xms128m -Xmx1024m"
+    networks: 
+      - wams
+
+  
+networks:
+ wams:
+   external: true
