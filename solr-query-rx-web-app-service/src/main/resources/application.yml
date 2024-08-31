@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: solr-query-rx-web-app-service
+  profiles:
+    active: solr-query-rx-web-app-service
+  config:
+    import: configserver:http://config-server:8888/
+#    import: configserver:http://localhost:8888/
+  cloud:
+    config:
+      enabled: true
+      allowOverride: true
+      overrideNone: true
+      name: solr-query-rx-web-app-service,config-client,default-retry-config
+      profile: solr-query-rx-web-app-service,config-client,default-retry-config
+      uri: http://config-server:8888
+#      uri: http://localhost:8888/
+# Sample query to config server: http://localhost:8888/solr-server-config,solr-query-service,config-client,default-retry-config/solr-server-config,solr-query-service,config-client,default-retry-config
