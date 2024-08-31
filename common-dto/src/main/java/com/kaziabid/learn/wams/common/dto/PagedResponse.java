@@ -11,7 +11,7 @@ public class PagedResponse<T> implements CommonDTO {
     private List<T> data;
 
     public PagedResponse() {
-        super();
+        page = Page.build();
     }
 
     public PagedResponse(Page page, List<T> data) {
